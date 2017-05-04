@@ -1,0 +1,32 @@
+sudo: required
+dist: trusty
+language: node_js
+matrix:
+  include:
+    - os: osx
+      node_js: 7
+    - os: linux
+      node_js: 7
+addons:
+  apt:
+    packages:
+      - libgnome-keyring-dev
+      - icnsutils
+      - graphicsmagick
+      - xz-utils
+      - rpm
+      - bsdtar
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; sleep 3; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+install:
+  - npm install
+before_script:
+  - export
+script:
+  - npm run dist
+env:
+  global:
+    - secure: HbISeWaa8/bSeJ8IQ4SxZHEfNHOMkVdE526fdKb03UejXzY6OWIoLc5BC6yTcQDepA+V/FQbtaQAAJx46/LHyGK4Dya5Vl/2qomrcubSbhk8EGHiQRoAkM59HOy7h30fiMzWdb0KMCZOYqf1Q6Yg3KZl51awBiPs1c/2nyZ+2BqHLCUxDzzoX32Kw3q0TNdt4RVDL6eMpoFEUx4YL0em51pA/tXDnxGcnPwg6qmY4ujmkStUBYh2OyGM9FQeJphGukF68RXbSD1MpEUxnXQYyQ9gIfGjM7xTS9WGAzxAePbjxZ3bRR5jIp1glFjdSzLVDgIZvd/7+ZRIH3pTz9DXjZicmBzS+VcQ6HZHUCgbvyqUDj0eBn5Lc2tkG+Oki1nzMfl3USKA58wXUnGpyvztDOsy8ZAVjwXWVdmSIbiJ8+JL7ZvO8eoAoLT240fNaP23jGr/yKjBOgRkaVjng2+DlNdVxQY4bBG8KJCVU58SicqCDEQpatTyoRpvXbPJWXbQjk41s2T7dscmfPzxQWh2bvcN3cUTLAgIxeUiQJN2FHNaTSx7759BSgXtcE7Ps04wlrVBMcpWNqkeWVwR0EZxqsupgA1xiv/J+upyO0vSZ01BJ5ksEbEgNr6BK22ybtTfCxeZdf5DkawlO3mkaXexN0LJneSHrkqWDqUUGYod4vk=
+    - secure: tFJE5ph7YzwVkInVXXCPW3IP4xusuKJPPDTagttkdKDU8obTJX2xU4uQffj5Gdqss32x/31Nj73KgshtuJ7UeUT59KeFXqb7V7ORUyomjRb/T8tKvEd+TuWyInybJlULM1wgfVpeIBheu+BPQqptypraMqh449Lqv+BhXoMkTVW4IjgSYq2nnnBvgnr/UA7M75Af21lqOn0bZeT80Qc/EDhOKSYlPqQU8zLW9I1H+BLVtQwCQFSrCCMxwQ+W8iX1c+veoaUPzmCXISPGEGAW238P9KOAZ+JhJTwDT2J4i0zno1rTVUOlvZsD7irhFYjIPnEJK66Vf7JpzLQJLU8lMbNTX/hH/WoZqdUTFKOYAx36NFT0ULq/IyBjZ52vN2N3WJIaqjCApl9pr/mwFG3MA38POUe9Q+QdgWOKG0qI+3jFUOzvqfmunHw0jF5frky7rXojgFJdYAQ4TS8/m5+VEjPG1xShqMUaUiut0gEG9SHMTXJmAhh+YBcq/fOjBiBkCpEgJQRPgKHZqJocvmVM76R10L4ADnWqpHd5xDXawNczOfB17UZupYbsWZuP93Xw66WuYQzy2yMzVh7M7gvndvfzBFnP+byZPv1lmJkhIUkfuq251ww+pCvzBekJnXjzmyWIvVyWo6/MrwlFTK+hOKNSR3xeswpf69a+E9DjuL0=
+    - secure: ZOP6IHWzlaFdlsKvEsYNZ6arYBHA4t1EhhKcWOOYOJsSXNDZGoz4/i9tGHhFAWlQg5AFlr35Aq8SYQKrUB5XgbnDI1v6bBUWmyfRnZ8pUgcec94mj6UGyJ7sB0HioB536TGJJ+QmqCLzcJ6uMlwFwiM0vmDLOSztNQMuLrq8xgXxreCne0KEZF4l3W/QlqwPIRKp6NgaXjG6OdgI/BLH++iod4gZb45HtBANUy6irw9hSBlpPO+xPWhxZPKPq3G1DhcI0BVfGZN3icdAiLMVQd3qcTuHjnOhxXO29XUAZI6Dr+8avjW0i245aeIoHKg6OnS2zivKar/vEvKDPzfgyELH7g5bm3MLJu/KoyZn3cDmSNEoprmd4xxpustrgISEKlZ93c1m2YnXuitwSqTimF82cqRgZraKlZzLSw30p9KaffeZwYeMY99Z8P8UU1BVHbwiMsMT835ZsB2JElXR0ax8oSBoT0GhJ92lrauAuwgA9N8aW1dH8jut263uFjoBVCVYSNHRjS6Xjd2jAJcs+tJaSc9N0NVofZkq5Khp6WKtHDwKQbbMMMvNWjJOnPWq38li6hoV1RqN+q8yJxlc5Ykdyuzz9oEQ7Qb5BjURx7MjnrkJGNPgEI+owLK9JivPxqrQCKb6suZ50f52m+0utOiqoB/D2RSNne6P8oIKVyg=

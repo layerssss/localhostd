@@ -1,0 +1,70 @@
+{
+  "name": "motel",
+  "version": "0.0.1",
+  "description": "Motel takes care of launching your web app on your development machine.",
+  "main": "bin/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --watch lib --watch bin bin/motel.js server --bind 0.0.0.0 --port 3000",
+    "app": "electron .",
+    "dist": "build"
+  },
+  "bin": {
+    "motel": "bin/motel.js"
+  },
+  "build": {
+    "appId": "in.micy.motel",
+    "mac": {
+      "category": "Development"
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "AppImage",
+        "rpm"
+      ]
+    },
+    "win": {
+      "target": [
+        "squirrel"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/layerssss/motel.git"
+  },
+  "author": {
+    "name": "Michael Yin",
+    "email": "layerssss@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/layerssss/motel/issues"
+  },
+  "homepage": "https://github.com/layerssss/motel#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "electron-builder-squirrel-windows": "^17.6.1",
+    "express": "^4.15.2",
+    "lodash": "^4.17.4",
+    "node-forge": "^0.7.1",
+    "node-netstat": "^1.4.2",
+    "node-pty": "^0.6.4",
+    "portfinder": "^1.0.13",
+    "shell-env": "^0.3.0",
+    "shell-quote": "^1.6.1",
+    "strip-ansi": "^3.0.1",
+    "username": "^2.3.0",
+    "ws": "^2.3.1"
+  },
+  "devDependencies": {
+    "electron-builder": "^17.8.0",
+    "electron": "^1.6.8",
+    "nodemon": "^1.11.0"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^3.0.0",
+    "utf-8-validate": "^3.0.1"
+  }
+}

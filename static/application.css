@@ -1,0 +1,10 @@
+.motel .panel-heading {
+    overflow-x: auto;
+}
+.motel .terminal_panel > .panel-body {
+    background-color: #000;
+}
+
+.motel .btn {
+    text-transform: initial;
+}
