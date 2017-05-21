@@ -48,6 +48,7 @@
     "electron-builder-squirrel-windows": "^17.6.1",
     "express": "^4.15.2",
     "lodash": "^4.17.4",
+    "mkdirp": "^0.5.1",
     "node-forge": "^0.7.1",
     "node-netstat": "^1.4.2",
     "node-pty": "^0.6.4",
