@@ -60,7 +60,7 @@ class ApplicationForm extends React.Component {
         createElement(
           FormControl, {
             type: 'text',
-            require: true,
+            required: true,
             readOnly: !this.props.creating,
             value: this.state.name,
             onChange: ev => this.setState({
