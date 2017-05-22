@@ -45,6 +45,7 @@
   "homepage": "https://github.com/layerssss/motel#readme",
   "dependencies": {
     "commander": "^2.9.0",
+    "death": "^1.1.0",
     "electron-builder-squirrel-windows": "^17.6.1",
     "express": "^4.15.2",
     "lodash": "^4.17.4",

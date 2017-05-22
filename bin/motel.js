@@ -7,6 +7,7 @@ var Commander = require('commander');
 var Assert = require('assert');
 var Server = require('../lib/server.js');
 var _ = require('lodash');
+var Death = require('death');
 
 var handleError = error => {
   _.defer(() => {
@@ -36,8 +37,12 @@ Commander.command('server')
     Promise.resolve()
       .then(() => server.listen(options))
       .then(() => {
-        process.once('SIGTERM', () => server.close().then(handleFinish, handleError));
-        process.once('SIGINT', () => server.close().then(handleFinish, handleError));
+        Death(() =>
+          Promise.resolve()
+          .then(() => server.close())
+          .then(handleFinish)
+          .catch(handleError)
+        );
       })
       .catch(handleError);
   });
