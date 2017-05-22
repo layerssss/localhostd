@@ -13,9 +13,9 @@ var appListen = () => {
           .then(() => appListening = true)
       })
     )
-    .then(() => tray.setToolTip('Motel is running...'))
+    .then(() => tray.setToolTip('Bnb is running...'))
     .catch(error => {
-      tray.setToolTip(`Motel is stopped: ${error.message}`);
+      tray.setToolTip(`Bnb is stopped: ${error.message}`);
       return Promise.reject(error);
     });
 };

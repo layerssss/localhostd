@@ -27,7 +27,7 @@ var handleFinish = () => {
 
 Commander.version(require(Path.join(__dirname, '..', 'package.json')).version)
   .option('-d --debug', 'enable debug')
-  .option('    --state-file [string]', 'state file, default: MOTEL_STATE_FILE or ~/.motel.json', Path.join(process.env['HOME'] || process.env['HOMEPATH'], '.motel.json'));
+  .option('    --state-file [string]', 'state file, default: MOTEL_STATE_FILE or ~/.bnb.json', Path.join(process.env['HOME'] || process.env['HOMEPATH'], '.bnb.json'));
 
 Commander.command('server')
   .option('-p, --port [integer]', 'HTTP port, default: 2999', ((i, d) => parseInt(i || d)), 2999)

@@ -1,1 +1,1 @@
-# motel
+# bnb

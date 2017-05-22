@@ -1,4 +1,4 @@
-class Motel extends React.Component {
+class Bnb extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -93,12 +93,12 @@ class Motel extends React.Component {
     var activeApplication = this.state.applications[this.state.activeApplicationIndex];
 
     if (this.state.loaded) {
-      document.title = `Motel`;
+      document.title = `Bnb`;
     }
 
     return createElement(
       'div', {
-        className: 'motel'
+        className: 'bnb'
       },
       (this.state.loaded &&
         createElement(
@@ -154,7 +154,7 @@ class Motel extends React.Component {
               Button, {
                 disabled: !this.state.caCertificate,
                 block: true,
-                onClick: () => OpenBlob('motel.ca.crt', new Blob([this.state.caCertificate]))
+                onClick: () => OpenBlob('bnb.ca.crt', new Blob([this.state.caCertificate]))
               },
               createElement(
                 'span', {

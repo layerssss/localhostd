@@ -1,19 +1,19 @@
 {
-  "name": "motel",
+  "name": "bnb",
   "version": "0.0.1",
-  "description": "Motel takes care of launching your web app on your development machine.",
+  "description": "Bnb takes care of launching your web app on your development machine.",
   "main": "bin/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --watch lib --watch bin bin/motel.js server --bind 0.0.0.0 --port 3000",
+    "dev": "nodemon --watch lib --watch bin bin/bnb.js server --bind 0.0.0.0 --port 3000",
     "app": "electron .",
     "dist": "build"
   },
   "bin": {
-    "motel": "bin/motel.js"
+    "bnb": "bin/bnb.js"
   },
   "build": {
-    "appId": "in.micy.motel",
+    "appId": "in.micy.bnb",
     "mac": {
       "category": "Development"
     },
@@ -32,7 +32,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/layerssss/motel.git"
+    "url": "git+https://github.com/layerssss/bnb.git"
   },
   "author": {
     "name": "Michael Yin",
@@ -40,9 +40,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/layerssss/motel/issues"
+    "url": "https://github.com/layerssss/bnb/issues"
   },
-  "homepage": "https://github.com/layerssss/motel#readme",
+  "homepage": "https://github.com/layerssss/bnb#readme",
   "dependencies": {
     "commander": "^2.9.0",
     "death": "^1.1.0",
