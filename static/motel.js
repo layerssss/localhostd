@@ -47,8 +47,9 @@ class Motel extends React.Component {
           if (xTerm) {
             xTerm.write(terminalOutput.dataString);
           }
-          if (!this.terminalHistory[terminalOutput.applicationName])
+          if (!this.terminalHistory[terminalOutput.applicationName]) {
             this.terminalHistory[terminalOutput.applicationName] = [];
+          }
           this.terminalHistory[terminalOutput.applicationName].push(terminalOutput.dataString);
         }
       };
