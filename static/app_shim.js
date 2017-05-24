@@ -29,7 +29,7 @@ if (typeof require != 'undefined') {
     reader.readAsDataURL(blob);
     reader.addEventListener('load', () => {
       ipcRenderer.send('renderer-open', name, reader.result.replace(/^.*base64\,/, ''));
-    })
+    });
   };
 
   OpenUrl = url => {

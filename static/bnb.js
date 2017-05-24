@@ -72,7 +72,7 @@ class Bnb extends React.Component {
 
         setTimeout(initSocket, 1000);
       };
-    }
+    };
 
     initSocket();
   }
@@ -93,7 +93,7 @@ class Bnb extends React.Component {
     var activeApplication = this.state.applications[this.state.activeApplicationIndex];
 
     if (this.state.loaded) {
-      document.title = `Bnb`;
+      document.title = 'Bnb';
     }
 
     return createElement(
@@ -374,6 +374,6 @@ class Bnb extends React.Component {
           )
         )
       )
-    )
+    );
   }
 }

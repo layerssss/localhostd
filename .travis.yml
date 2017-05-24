@@ -28,6 +28,7 @@ install:
 before_script:
   - export
 script:
+  - npm run lint
   - npm run dist
 env:
   global:

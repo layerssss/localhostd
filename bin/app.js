@@ -10,7 +10,7 @@ var appListen = () => {
       .then(() => {
         if (appListening) return;
         return app.listen()
-          .then(() => appListening = true)
+          .then(() => appListening = true);
       })
     )
     .then(() => tray.setToolTip('Bnb is running...'))
