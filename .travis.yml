@@ -1,6 +1,9 @@
 sudo: required
 dist: trusty
 language: node_js
+cache:
+  directories:
+    - "$HOME/.cache/electron-builder"
 matrix:
   include:
     - os: osx
