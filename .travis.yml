@@ -5,6 +5,7 @@ cache:
   directories:
     - "$HOME/.cache/electron-builder"
     - "$HOME/.npm"
+    - "$HOME/.electron"
 matrix:
   include:
     - os: osx
