@@ -9,9 +9,9 @@ cache:
 matrix:
   include:
     - os: osx
-      node_js: 7
+      node_js: 6
     - os: linux
-      node_js: 7
+      node_js: 6
 addons:
   apt:
     packages:
