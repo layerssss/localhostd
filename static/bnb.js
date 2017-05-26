@@ -225,6 +225,16 @@ class Bnb extends React.Component {
                       ButtonToolbar, {},
                       createElement(
                         Button, {
+                          onClick: ()=> OpenUrl(`http://${activeApplication.name}.dev`)
+                        },
+                        createElement(
+                          'span', {
+                            className: 'fa fa-fw fa-globe'
+                          }
+                        )
+                      ),
+                      createElement(
+                        Button, {
                           disabled: activeApplication.locked,
                           onClick: () => this.doAction(activeApplication.running ? 'StopApplication' : 'StartApplication', {
                             applicationName: activeApplication.name
