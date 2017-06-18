@@ -8,6 +8,12 @@ var Assert = require('assert');
 var Server = require('../lib/server.js');
 var _ = require('lodash');
 var Death = require('death');
+var UpdateNotifier = require('update-notifier');
+var pkg = require('../package.json');
+
+UpdateNotifier({
+  pkg
+}).notify();
 
 var handleError = error => {
   _.defer(() => {
@@ -25,15 +31,18 @@ var handleFinish = () => {
   process.exit(0);
 };
 
-Commander.version(require(Path.join(__dirname, '..', 'package.json')).version)
+var command;
+
+Commander.version(pkg.version)
   .option('-d --debug', 'enable debug')
-  .option('    --state-file [string]', 'state file, default: MOTEL_STATE_FILE or ~/.bnb.json', Path.join(process.env['HOME'] || process.env['HOMEPATH'], '.bnb.json'));
+  .option('    --state-file [string]', 'state file, default: ~/.bnb.json', Path.join(process.env['HOME'] || process.env['HOMEPATH'], '.bnb.json'));
 
 Commander.command('server')
   .option('-p, --port [integer]', 'HTTP port, default: 2999', ((i, d) => parseInt(i || d)), 2999)
   .option('-b, --bind [string]', 'HTTP bind, default: 127.0.0.1', '127.0.0.1')
   .action(options => {
     var server = new Server(Commander);
+    command = 'server';
     Promise.resolve()
       .then(() => server.listen(options))
       .then(() => {
@@ -49,7 +58,7 @@ Commander.command('server')
 
 Commander.parse(process.argv);
 
-if (Commander.args[0].constructor == String) {
+if (!command) {
   Commander.outputHelp();
   process.exit(1);
 }
