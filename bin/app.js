@@ -30,6 +30,11 @@ electron.app.on('ready', () => {
     .then(() => app.listen())
     .then(() => tray.setToolTip('Bnb is running...'))
     .then(() => {
+      tray.on('double-click', () => Promise.resolve()
+        .then(() => app.showWindow())
+        .catch(handleFatelError)
+      );
+
       tray.setContextMenu(electron.Menu.buildFromTemplate([{
         label: 'Open',
         click: () => {
