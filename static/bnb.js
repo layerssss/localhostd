@@ -115,53 +115,72 @@ class Bnb extends React.Component {
                 overflowY: 'auto'
               }
             },
-            this.state.applications.map((application, applicationIndex) =>
-              createElement(
-                Button, {
-                  key: application.name,
-                  block: true,
-                  bsStyle: (application.locked ?
-                    'warning' :
-                    (application.running ? 'success' : 'default')
-                  ),
-                  active: activeApplication == application,
-                  onClick: () => this.setState({
-                    activeApplicationIndex: applicationIndex,
-                    creatingApplication: false
+            createElement(
+              Nav, {
+                bsStyle: 'pills',
+                stacked: true
+              },
+              this.state.applications.map((application, applicationIndex) =>
+                createElement(
+                  NavItem, {
+                    key: application.name,
+                    bsStyle: (application.locked ?
+                      'warning' :
+                      (application.running ? 'success' : 'default')
+                    ),
+                    active: activeApplication == application,
+                    onClick: () => this.setState({
+                      activeApplicationIndex: applicationIndex,
+                      creatingApplication: false
 
+                    })
+                  },
+                  createElement(
+                    'span', {
+                      className: 'fa fa-fw fa-cube'
+                    }
+                  ),
+                  application.name
+                )
+              ),
+              createElement(
+                NavItem, {
+                  active: this.state.creatingApplication,
+                  onClick: () => this.setState({
+                    creatingApplication: true,
+                    activeApplicationIndex: -1
                   })
                 },
-                application.name
+                createElement(
+                  'span', {
+                    className: 'fa fa-fw fa-plus'
+                  }
+                ),
+                'New application'
               )
             ),
             createElement(
-              Button, {
-                active: this.state.creatingApplication,
-                block: true,
-                onClick: () => this.setState({
-                  creatingApplication: true,
-                  activeApplicationIndex: -1
-                })
+              ButtonToolbar, {
+                style: {
+                  position: 'absolute',
+                  bottom: 10,
+                  left: 10,
+                  right: 10
+                }
               },
               createElement(
-                'span', {
-                  className: 'fa fa-fw fa-plus'
-                }
-              ),
-              'New application'
-            ),
-            createElement(
-              Button, {
-                disabled: !this.state.caCertificate,
-                block: true,
-                onClick: () => OpenBlob('bnb.ca.crt', new Blob([this.state.caCertificate]))
-              },
-              createElement(
-                'span', {
-                  className: 'fa fa-fw fa-certificate'
-                }
-              ),
-              'SSL CA certificate'
+                Button, {
+                  disabled: !this.state.caCertificate,
+                  block: true,
+                  onClick: () => OpenBlob('bnb.ca.crt', new Blob([this.state.caCertificate]))
+                },
+                createElement(
+                  'span', {
+                    className: 'fa fa-fw fa-download'
+                  }
+                ),
+                'SSL CA certificate'
+              )
             )
           ),
           createElement(

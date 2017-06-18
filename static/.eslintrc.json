@@ -26,6 +26,8 @@
         "FormGroup": true,
         "FormControl": true,
         "InputGroup": true,
+        "Nav": true,
+        "NavItem": true,
         "Panel": true
     }
 }
