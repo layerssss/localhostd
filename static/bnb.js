@@ -157,29 +157,21 @@ class Bnb extends React.Component {
                   }
                 ),
                 'New application'
-              )
-            ),
-            createElement(
-              ButtonToolbar, {
-                style: {
-                  position: 'absolute',
-                  bottom: 10,
-                  left: 10,
-                  right: 10
-                }
-              },
+              ),
               createElement(
-                Button, {
-                  disabled: !this.state.caCertificate,
-                  block: true,
-                  onClick: () => OpenBlob('bnb.ca.crt', new Blob([this.state.caCertificate]))
+                NavItem, {
+                  active: !this.state.creatingApplication && !activeApplication,
+                  onClick: () => this.setState({
+                    creatingApplication: false,
+                    activeApplicationIndex: -1
+                  })
                 },
                 createElement(
                   'span', {
-                    className: 'fa fa-fw fa-download'
+                    className: 'fa fa-fw fa-info-circle'
                   }
                 ),
-                'SSL CA certificate'
+                'Tips'
               )
             )
           ),
@@ -226,7 +218,7 @@ class Bnb extends React.Component {
                   )
                 )
               ) :
-              (activeApplication &&
+              (activeApplication ?
                 createElement(
                   'div', {
                     key: activeApplication.name,
@@ -395,6 +387,36 @@ class Bnb extends React.Component {
                           )
                         )
                       )
+                    )
+                  )
+                ) : 
+                createElement(
+                  Alert, {
+                    bsStyle: 'success'
+                  },
+                  createElement(
+                    'p', {},
+                    'Tips:'
+                  ),
+                  createElement(
+                    'p', {},
+                    `You can use HTTP(S) proxy at http://${this.state.bind}:${this.state.port} to access bnb in your own browser.`
+                  ),
+                  createElement(
+                    'p', {},
+                    'You can also download the self-signed CA which is used for SSL of .dev domains.',
+                    createElement(
+                      'a', {
+                        href: '#',
+                        disabled: !this.state.caCertificate,
+                        onClick: () => OpenBlob('bnb.ca.crt', new Blob([this.state.caCertificate]))
+                      },
+                      createElement(
+                        'span', {
+                          className: 'fa fa-fw fa-download'
+                        }
+                      ),
+                      'SSL CA certificate'
                     )
                   )
                 )

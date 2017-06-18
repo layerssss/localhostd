@@ -18,6 +18,7 @@
         "Bnb": true,
         "ApplicationForm": true,
         "XTerm": true,
+        "Alert": true,
         "Button": true,
         "ButtonGroup": true,
         "ButtonToolbar": true,
