@@ -124,10 +124,6 @@ class Bnb extends React.Component {
                 createElement(
                   NavItem, {
                     key: application.name,
-                    bsStyle: (application.locked ?
-                      'warning' :
-                      (application.running ? 'success' : 'default')
-                    ),
                     active: activeApplication == application,
                     onClick: () => this.setState({
                       activeApplicationIndex: applicationIndex,
@@ -137,7 +133,7 @@ class Bnb extends React.Component {
                   },
                   createElement(
                     'span', {
-                      className: 'fa fa-fw fa-cube'
+                      className: `fa fa-fw ${application.locked ? 'fa-spin fa-spinner' : (application.running ? 'fa-cube' : '')}`
                     }
                   ),
                   application.name
