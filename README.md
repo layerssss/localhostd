@@ -37,7 +37,7 @@ Make sure they listen to the HTTP port number specified in the `PORT` enviroment
 
 * `ember server`
 * `jekyll server`
-* `rails server --port $PORT`
+* `rails server --port $PORT --bind 127.0.0.1` `--bind 127.0.0.1` is for OSX otherwise rails will be using a special localhost socket which is not accessible by Node.js API
 * `python -m SimpleHTTPServer $PORT`
 * `php -S 127.0.0.1:$PORT`
 
