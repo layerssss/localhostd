@@ -7,6 +7,7 @@ class ApplicationForm extends React.Component {
       command: '',
       port: 2000 + Math.floor(Math.random() * 1000),
       out: '',
+      timeout: '',
       dir: '',
       env: {},
       envSearch: '',
@@ -43,6 +44,7 @@ class ApplicationForm extends React.Component {
             command: this.state.command,
             port: this.state.port,
             out: this.state.out,
+            timeout: this.state.timeout,
             dir: this.state.dir,
             env: this.state.env
           });
@@ -114,7 +116,7 @@ class ApplicationForm extends React.Component {
         },
         createElement(
           ControlLabel, {},
-          'Ouput path (optional):'
+          'Output path (optional):'
         ),
         createElement(
           FormControl, {
@@ -122,6 +124,27 @@ class ApplicationForm extends React.Component {
             value: this.state.out,
             onChange: ev => this.setState({
               out: ev.target.value
+            })
+          }
+        )
+      ),
+      createElement(
+        FormGroup, {
+          controlId: `${this.id}_timeout`,
+          validationState: 'success'
+        },
+        createElement(
+          ControlLabel, {},
+          'Timeout (seconds before shutting the application down, optional):'
+        ),
+        createElement(
+          FormControl, {
+            type: 'number',
+            min: 0,
+            step: 60,
+            value: this.state.timeout,
+            onChange: ev => this.setState({
+              timeout: Number(ev.target.value) || ''
             })
           }
         )

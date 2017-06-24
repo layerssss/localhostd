@@ -1,6 +1,6 @@
 {
   "name": "bnb",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Bnb takes care of launching your web app on your development machine.",
   "main": "bin/app.js",
   "scripts": {
