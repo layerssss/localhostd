@@ -135,7 +135,7 @@ class ApplicationForm extends React.Component {
         },
         createElement(
           ControlLabel, {},
-          'Timeout (seconds before shutting the application down, optional):'
+          'Timeout (idle seconds before shutting the application down, optional):'
         ),
         createElement(
           FormControl, {
