@@ -60,6 +60,7 @@
     "strip-ansi": "^3.0.1",
     "update-notifier": "^2.2.0",
     "username": "^2.3.0",
+    "which": "^1.2.14",
     "ws": "^2.3.1"
   },
   "devDependencies": {
