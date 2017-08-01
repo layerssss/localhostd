@@ -192,7 +192,8 @@ class Bnb extends React.Component {
                   ApplicationForm, {
                     application: {
                       dir: this.state.env['HOME'] || this.state.env['HOMEPATH'],
-                      env: _.assign({}, this.state.env)
+                      env: _.assign({}, this.state.env),
+                      timeout: 600
                     },
                     creating: true,
                     onSubmit: application => {
