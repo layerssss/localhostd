@@ -110,7 +110,7 @@ class Bnb extends React.Component {
                 top: 0,
                 left: 0,
                 bottom: 0,
-                width: 200,
+                width: 300,
                 padding: 10,
                 overflowY: 'auto'
               }
@@ -175,7 +175,7 @@ class Bnb extends React.Component {
             'div', {
               style: {
                 position: 'absolute',
-                left: 200,
+                left: 300,
                 top: 0,
                 right: 0,
                 bottom: 0,
