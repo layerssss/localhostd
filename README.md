@@ -16,6 +16,7 @@ Comparing to hotel, this project comes with a few extra features:
 * Robust state control (easily and reliably restarting app when needed)
 * Proxy all network request (so you don't have to setup proxy auto-config, just use the single proxy, makes it easy for cross-projects API invocation)
 * Self-signed SSL connection (with correct SAN so it produces a 'greenlock' after marking CA trusted manually)
+* Set a timeout option so application will be automatically shutdown
 
 ## Install
 
