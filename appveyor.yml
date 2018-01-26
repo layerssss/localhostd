@@ -26,4 +26,4 @@ test_script:
   - npm --version
 
 on_success:
-  - ps: ls .\dist\win\*.exe | % { Push-AppveyorArtifact $_.FullName }
+  - ps: ls .\dist\*\*.exe | % { Push-AppveyorArtifact $_.FullName }
