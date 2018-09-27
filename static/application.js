@@ -1,7 +1,4 @@
-var rootElement = document.createElement('div');
+var rootElement = document.createElement("div");
 document.body.appendChild(rootElement);
 
-ReactDOM.render(
-  createElement(Bnb, {}),
-  rootElement
-);
+ReactDOM.render(createElement(Bnb, {}), rootElement);

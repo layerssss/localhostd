@@ -32,14 +32,12 @@ var {
   Tooltip
 } = ReactBootstrap;
 
-var {
-  createElement
-} = React;
+var { createElement } = React;
 
 var OpenBlob = (name, blob) => {
-  var a = document.createElement('a');
-  a.style = 'display: none;';
-  a.target = '_blank';
+  var a = document.createElement("a");
+  a.style = "display: none;";
+  a.target = "_blank";
   a.href = window.URL.createObjectURL(blob);
   a.download = name;
   document.body.appendChild(a);
@@ -51,7 +49,7 @@ var OpenBlob = (name, blob) => {
   });
 };
 
-var OpenUrl = (url) => {
+var OpenUrl = url => {
   location.href = url;
 };
 
@@ -61,10 +59,10 @@ var newId = () => {
 };
 
 var SelectFile = (accept, callback) => {
-  var input = document.createElement('input');
-  input.type = 'file';
+  var input = document.createElement("input");
+  input.type = "file";
   input.accept = accept;
-  input.style = 'position: fixed;';
+  input.style = "position: fixed;";
   document.body.appendChild(input);
 
   input.onchange = () => {
@@ -83,24 +81,25 @@ var SelectFile = (accept, callback) => {
 };
 
 const PADDING = {
-  RIGHT: 'padding-right',
-  LEFT: 'padding-left',
-  TOP: 'padding-top',
-  BOTTOM: 'padding-bottom'
+  RIGHT: "padding-right",
+  LEFT: "padding-left",
+  TOP: "padding-top",
+  BOTTOM: "padding-bottom"
 };
 
 const MARGIN = {
-  RIGHT: 'margin-right',
-  LEFT: 'margin-left',
-  TOP: 'margin-top',
-  BOTTOM: 'margin-bottom'
+  RIGHT: "margin-right",
+  LEFT: "margin-left",
+  TOP: "margin-top",
+  BOTTOM: "margin-bottom"
 };
 
-const getStyle = (el, str) => parseInt(getComputedStyle(el).getPropertyValue(str), 10);
+const getStyle = (el, str) =>
+  parseInt(getComputedStyle(el).getPropertyValue(str), 10);
 
 const getTextNodeBoundingClientRect = node => {
   const newNode = node.length ? node[node.length - 1] : node;
-  if (typeof document.createRange === 'function') {
+  if (typeof document.createRange === "function") {
     const range = document.createRange();
     if (range.getBoundingClientRect) {
       range.selectNodeContents(newNode);
@@ -126,12 +125,21 @@ Util.getDimension = node => {
 
   if (node.childElementCount) {
     const child = node.childNodes[0];
-    margin.height = getStyle(child, MARGIN.BOTTOM) + getStyle(child, MARGIN.TOP);
+    margin.height =
+      getStyle(child, MARGIN.BOTTOM) + getStyle(child, MARGIN.TOP);
     margin.width = getStyle(child, MARGIN.LEFT) + getStyle(child, MARGIN.RIGHT);
 
     return {
-      width: (child.scrollWidth || child.offsetWidth) + margin.width + padding.left + padding.right,
-      height: (child.scrollHeight || child.offsetHeight) + margin.height + padding.top + padding.bottom
+      width:
+        (child.scrollWidth || child.offsetWidth) +
+        margin.width +
+        padding.left +
+        padding.right,
+      height:
+        (child.scrollHeight || child.offsetHeight) +
+        margin.height +
+        padding.top +
+        padding.bottom
     };
   }
 
