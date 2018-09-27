@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --watch lib --watch bin bin/bnb.js server --bind 0.0.0.0 --port 3000",
+    "rebuild-app": "electron-builder install-app-deps",
     "app": "electron .",
     "dist": "build",
     "lint": "eslint ."
