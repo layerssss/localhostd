@@ -177,10 +177,11 @@ export default compose(
                         {!uiApplication && (
                           <Button
                             onClick={() =>
-                              OpenUrl(`http://${activeApplication.name}.test`)
+                              OpenUrl(`http://${activeApplication.hostname}/`)
                             }
                           >
                             <span className="fa fa-fw fa-globe" />
+                            {`//${activeApplication.hostname}/`}
                           </Button>
                         )}
                         {uiApplication && (
@@ -188,6 +189,7 @@ export default compose(
                             onClick={() => OpenUrl(`http://${uiState.uiHost}`)}
                           >
                             <span className="fa fa-fw fa-home" />
+                            View all applications
                           </Button>
                         )}
                         <Button
