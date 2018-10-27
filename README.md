@@ -1,6 +1,6 @@
-# bnb
+# LocalhostD
 
-Run and serve your web apps in .dev domains on your develop machine.
+Run and serve your web apps in .test domains on your develop machine.
 
 ![a](https://user-images.githubusercontent.com/1559832/27260786-ccb150de-5488-11e7-9cb5-44b98d5fdad2.gif)
 
@@ -23,16 +23,16 @@ Comparing to hotel, this project comes with a few extra features:
 If you prefer launching and keeping it by CLI, then
 
 ```
-npm install bnb -g
-bnb server 
+npm install localhostd -g
+localhostd server 
 ```
 
-... or if you prefer launching it as a GUI staying as a tray icon, [download the latest release](https://github.com/layerssss/bnb/releases).
+... or if you prefer launching it as a GUI staying as a tray icon, [download the latest release](https://github.com/layerssss/localhostd/releases).
 
 
 ## Usage
 
-Configure your brower to use `http://localhost:2999` as HTTP/HTTPS proxy. Then add your apps in http://bnb.dev/ (or in GUI), specifying the directory and the command to run your application.
+Configure your brower to use `http://localhost:2999` as HTTP/HTTPS proxy. Then add your apps in http://localhostd.test/ (or in GUI), specifying the directory and the command to run your application.
 
 Make sure they listen to the HTTP port number specified in the `PORT` enviroment variable. Here are some examples commands:
 
@@ -42,11 +42,11 @@ Make sure they listen to the HTTP port number specified in the `PORT` enviroment
 * `python -m SimpleHTTPServer $PORT`
 * `php -S 127.0.0.1:$PORT`
 
-Then click the 🌎 button in the app details to go to its `.dev` domain. `bnb` will launch your app for you.
+Then click the 🌎 button in the app details to go to its `.test` domain. `localhostd` will launch your app for you.
 
 ## Self-signed SSL
 
-`bnb` generates a self-signed CA key-pair and stores it with other data at `~/.bnb.json`. Then it signs SSL certificate for each `.dev` domain when requested. So SSL works out of box, just by going to `https://my-app.dev/`. But if want to see a 'greenlock', i.e. to make your browser trust `bnb`, you need to mark your self-signed CA as trusted in browser or OS.
+`localhostd` generates a self-signed CA key-pair and stores it with other data at `~/.localhostd.json`. Then it signs SSL certificate for each `.test` domain when requested. So SSL works out of box, just by going to `https://my-app.test/`. But if want to see a 'greenlock', i.e. to make your browser trust `localhostd`, you need to mark your self-signed CA as trusted in browser or OS.
 
 ## License
 

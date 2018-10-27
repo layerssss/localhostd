@@ -1,4 +1,5 @@
+/node_modules
+/dist
+/ui_build
+
 *.log
-node_modules
-dist
-.npmrc

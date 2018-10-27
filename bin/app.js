@@ -1,50 +1,26 @@
-var electron = require("electron");
-var Path = require("path");
-var Utility = require("../lib/utility.js");
+const electron = require("electron");
+const Path = require("path");
 
-var app, tray, App;
+const waitDeath = require("../lib/wait_death.js");
 
-var handleFatelError = error => {
-  console.error(error);
-  electron.dialog.showMessageBox(
-    null,
-    {
-      type: "error",
-      title: "Fatel error",
-      message: error.message
-    },
-    () => {
-      process.exit(1);
-    }
-  );
-};
-
-electron.app.on("ready", () => {
+electron.app.on("ready", () =>
   Promise.resolve()
-    .then(() => {
-      App = require("../lib/app.js");
-      app = new App({
+    .then(async () => {
+      const App = require("../lib/app.js");
+      const app = new App({
         port: 2999
       });
-      tray = new electron.Tray(Path.join(__dirname, "../static/tray.png"));
-    })
-    .then(() => app.listen())
-    .then(() => tray.setToolTip("Bnb is running..."))
-    .then(() => {
-      tray.on("double-click", () =>
-        Promise.resolve()
-          .then(() => app.showWindow())
-          .catch(handleFatelError)
-      );
+      const tray = new electron.Tray(Path.join(__dirname, "../lib/tray.png"));
+      await app.listen();
+      tray.setToolTip("LocalhostD is running...");
+      tray.on("double-click", () => app.showWindow());
 
       tray.setContextMenu(
         electron.Menu.buildFromTemplate([
           {
             label: "Open",
             click: () => {
-              Promise.resolve()
-                .then(() => app.showWindow())
-                .catch(handleFatelError);
+              app.showWindow();
             }
           },
           {
@@ -55,17 +31,34 @@ electron.app.on("ready", () => {
           }
         ])
       );
-    })
-    .then(() => {
-      if (process.platform == "darwin") electron.app.dock.hide();
+
+      if (process.platform === "darwin") electron.app.dock.hide();
 
       electron.app.on("activate", () => {
-        Promise.resolve()
-          .then(() => app.showWindow())
-          .catch(handleFatelError);
+        app.showWindow();
       });
 
       electron.app.on("window-all-closed", () => {});
+
+      const signal = await waitDeath();
+
+      // eslint-disable-next-line no-console
+      console.log(`received ${signal}`);
+      electron.app.exit();
     })
-    .catch(handleFatelError);
-});
+    .catch(error => {
+      // eslint-disable-next-line no-console
+      console.error(error.stack);
+      electron.dialog.showMessageBox(
+        null,
+        {
+          type: "error",
+          title: "Fatel error",
+          message: `LocalhostD has encountered an error: \n${error.message}`
+        },
+        () => {
+          process.exit(1);
+        }
+      );
+    })
+);
