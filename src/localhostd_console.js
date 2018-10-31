@@ -270,9 +270,9 @@ export default compose(
                         <Panel.Body>
                           <ApplicationForm
                             application={activeApplication}
-                            onSubmit={application => {
+                            onSubmit={applicationData => {
                               doAction("CreateApplication", {
-                                application
+                                applicationData
                               });
                             }}
                           >
