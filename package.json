@@ -14,7 +14,8 @@
     "build": "yarn ui_build && yarn app_build",
     "dist": "yarn ui_build && yarn app_build",
     "lint": "eslint .",
-    "dev": "concurrently \"yarn ui_watch\" \"yarn node_dev\""
+    "dev": "concurrently \"yarn ui_watch\" \"yarn node_dev\"",
+    "cleanup": "rm -Rf ./ui_build ./dist"
   },
   "bin": {
     "localhostd": "bin/cli.js"
