@@ -1,5 +1,4 @@
 import React from "react";
-import _ from "lodash";
 import { compose, withProps } from "recompose";
 import {
   Nav,
@@ -133,8 +132,8 @@ export default compose(
                   <Panel.Body>
                     <ApplicationForm
                       application={{
-                        dir: uiState.env["HOME"] || uiState.env["HOMEPATH"],
-                        env: _.assign({}, uiState.env),
+                        dir: uiState.homedir,
+                        env: {},
                         timeout: 600
                       }}
                       creating

@@ -16,7 +16,10 @@ Commander.version(pkg.version)
   .option(
     "    --state-file [string]",
     "state file, default: ~/.localhostd.json",
-    Path.join(process.env["HOME"] || process.env["HOMEPATH"], ".localhostd.json")
+    Path.join(
+      process.env["HOME"] || process.env["HOMEPATH"],
+      ".localhostd.json"
+    )
   );
 
 Commander.command("server")
