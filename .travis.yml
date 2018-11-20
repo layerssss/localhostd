@@ -11,6 +11,14 @@ matrix:
       node_js: 8
     - os: linux
       node_js: 8
+      deploy:
+        skip_cleanup: true
+        on:
+          tags: true
+        provider: npm
+        email: layerssss@gmail.com
+        api_key:
+          secure: tEF3w7tp7BV/LRfi9BhQTObLJuZ0ISe6lnRZxTw3OzuP/eQGIwMhwzzasAjCM2Lj71yPi8WQkHICb0KPl1+XFea0yMagcDogdO+uDT2iOy/ijeO0VeOIeoe+yYbbAIIuazeaJUgOI0wEbsbGMo9z5VdoQLlW9+Z3rzQdk7WMueCU3Xr6iqcRUGJ77jzAlLjU7hWTpzfAfr/yZKkP15qEjUOC4GrwSFDDwOAxoZTr6pMz5HTTftfaDR/6pIkheu0zq6EiAFUtkcW+WiovQeHGwTaR+VZajGmScVP9g8J98EqqFDUlvLzNLenlrmBXHlo3JqznJwp9lSYSCAkwUzn49rmNWWa/Zze/zNbezbWfaCiC2qbF2xVmcB5eO7YAFVlGlMXRluX7Rojc7N2KE7ET0uKrG5ZDnHWVnyVDOwM/3bmLIssCVyxIeNb9VcHovXS9uPXaehpQEVeaN/3lvwGacu+tPCLJW1HZv1VrF9uu3gjT3sM7+Uwb0igmLT4d3Mw6imab3ySl0t53MFFl+siubTf/EidTxvoa7gc2VSquWngU79AE/qu8XH1FJ1KdRxRdNL+ako6XN0pz+VKPFVVx29Z1juaIXHuAWtLpPqLYZPxlgDN7Hw7mWJ0aYQsF9Y8If4FgWeE9FOIDdRO8xg3coxmvFASiKhw8Adgh3nhcTes=
 
 addons:
   apt:
