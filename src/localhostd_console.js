@@ -175,12 +175,10 @@ export default compose(
                       <ButtonToolbar>
                         {!uiApplication && (
                           <Button
-                            onClick={() =>
-                              OpenUrl(`http://${activeApplication.hostname}/`)
-                            }
+                            onClick={() => OpenUrl(activeApplication.origin)}
                           >
                             <span className="fa fa-fw fa-globe" />
-                            {`//${activeApplication.hostname}/`}
+                            {activeApplication.origin}
                           </Button>
                         )}
                         {uiApplication && (

@@ -16,6 +16,7 @@ class ApplicationForm extends React.Component {
   state = {
     id: `application_form_${uuid.v4()}`,
     name: "",
+    hostname: "",
     command: "",
     port: 2000 + Math.floor(Math.random() * 1000),
     out: "",
@@ -63,6 +64,7 @@ class ApplicationForm extends React.Component {
           ev.preventDefault();
           this.props.onSubmit({
             name: this.state.name,
+            hostname: this.state.hostname,
             command: this.state.command,
             port: this.state.port,
             out: this.state.out,
@@ -87,6 +89,21 @@ class ApplicationForm extends React.Component {
                 name: ev.target.value
               })
             }
+          />
+        </FormGroup>
+        <FormGroup
+          controlId={`${this.state.id}_hostname`}
+        >
+          <ControlLabel>Hostname:</ControlLabel>
+          <FormControl
+            type="text"
+            value={this.state.hostname}
+            onChange={ev =>
+              this.setState({
+                hostname: ev.target.value
+              })
+            }
+            placeholder={`${this.state.name}.test`}
           />
         </FormGroup>
         <FormGroup
