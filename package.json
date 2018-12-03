@@ -64,7 +64,7 @@
     "app-builder-lib": "^20.28.3",
     "commander": "^2.18.0",
     "default-shell": "^1.0.1",
-    "electron-updater": "^3.1.2",
+    "electron-updater": "^4.0.5",
     "execa": "^1.0.0",
     "express": "^4.16.3",
     "http-proxy": "^1.17.0",
