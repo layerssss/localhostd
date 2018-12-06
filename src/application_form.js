@@ -5,6 +5,7 @@ import {
   Form,
   FormGroup,
   FormControl,
+  Checkbox,
   ControlLabel,
   InputGroup,
   Button,
@@ -18,6 +19,7 @@ class ApplicationForm extends React.Component {
     name: "",
     hostname: "",
     command: "",
+    ssl: false,
     port: 2000 + Math.floor(Math.random() * 1000),
     out: "",
     timeout: "",
@@ -34,7 +36,11 @@ class ApplicationForm extends React.Component {
     const newState = { ...state, prevProps: props };
 
     if (!!prevProps.application !== !!application)
-      Object.assign(newState, props.application);
+      Object.assign(newState, {
+        ...application,
+        hostname: String(application.hostname || ""),
+        ssl: Boolean(application.ssl)
+      });
 
     return newState;
   }
@@ -65,6 +71,7 @@ class ApplicationForm extends React.Component {
           this.props.onSubmit({
             name: this.state.name,
             hostname: this.state.hostname,
+            ssl: this.state.ssl,
             command: this.state.command,
             port: this.state.port,
             out: this.state.out,
@@ -91,9 +98,7 @@ class ApplicationForm extends React.Component {
             }
           />
         </FormGroup>
-        <FormGroup
-          controlId={`${this.state.id}_hostname`}
-        >
+        <FormGroup controlId={`${this.state.id}_hostname`}>
           <ControlLabel>Hostname:</ControlLabel>
           <FormControl
             type="text"
@@ -106,6 +111,12 @@ class ApplicationForm extends React.Component {
             placeholder={`${this.state.name}.test`}
           />
         </FormGroup>
+        <Checkbox
+          checked={this.state.ssl}
+          onChange={ev => this.setState({ ssl: ev.target.value })}
+        >
+          SSL
+        </Checkbox>
         <FormGroup
           controlId={`${this.state.id}_command`}
           validationState={this.isCommandValid() ? "success" : "error"}
