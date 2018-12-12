@@ -113,7 +113,7 @@ class ApplicationForm extends React.Component {
         </FormGroup>
         <Checkbox
           checked={this.state.ssl}
-          onChange={ev => this.setState({ ssl: ev.target.value })}
+          onChange={ev => this.setState({ ssl: ev.target.checked })}
         >
           SSL
         </Checkbox>
