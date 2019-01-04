@@ -1,5 +1,6 @@
 import React from "react";
 import { compose, withProps } from "recompose";
+import _ from "lodash";
 import {
   Nav,
   NavItem,
@@ -57,13 +58,21 @@ export default compose(
               }}
             >
               <Nav bsStyle="pills" stacked>
-                {uiState.applications.map((application, applicationIndex) => (
+                {_.sortBy(
+                  uiState.applications.map((a, index) => ({
+                    ...a,
+                    index
+                  })),
+                  a => a.name
+                ).map(application => (
                   <NavItem
                     key={application.name}
-                    active={activeApplication === application}
+                    active={
+                      this.state.activeApplicationIndex === application.index
+                    }
                     onClick={() =>
                       this.setState({
-                        activeApplicationIndex: applicationIndex,
+                        activeApplicationIndex: application.index,
                         creatingApplication: false
                       })
                     }
