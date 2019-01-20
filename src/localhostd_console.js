@@ -143,7 +143,7 @@ export default compose(
                       application={{
                         dir: uiState.homedir,
                         env: {},
-                        timeout: 600
+                        timeout: 3600
                       }}
                       creating
                       onSubmit={applicationData => {
