@@ -37,7 +37,7 @@ const withUIState = WrappedComponent =>
       this.terminalHistory = {};
       const initSocket = () => {
         this.socket = new ShimWebSocket(
-          window.location.origin.replace(/^http/, "ws")
+          `${window.location.origin.replace(/^http/, "ws")}/_bnb_ui_state`
         );
 
         this.socket.onmessage = messageEvent => {
