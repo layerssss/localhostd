@@ -15,6 +15,13 @@ electron.app.on("ready", () =>
       tray.setToolTip("LocalhostD is running...");
       tray.on("double-click", () => app.showWindow());
 
+      const quit = async () => {
+        // eslint-disable-next-line no-console
+        console.log("quiting...");
+        await app.close();
+        electron.app.exit();
+      };
+
       tray.setContextMenu(
         electron.Menu.buildFromTemplate([
           {
@@ -26,7 +33,7 @@ electron.app.on("ready", () =>
           {
             label: "Quit",
             click: () => {
-              electron.app.exit();
+              quit();
             }
           }
         ])
@@ -38,13 +45,20 @@ electron.app.on("ready", () =>
         app.showWindow();
       });
 
-      electron.app.on("window-all-closed", () => {});
+      electron.app.on("window-all-closed", event => {
+        event.preventDefault();
+      });
+
+      electron.app.on("before-quit", event => {
+        event.preventDefault();
+        quit();
+      });
 
       const signal = await waitDeath();
 
       // eslint-disable-next-line no-console
       console.log(`received ${signal}`);
-      electron.app.exit();
+      await quit();
     })
     .catch(error => {
       // eslint-disable-next-line no-console

@@ -43,6 +43,7 @@ Commander.command("server")
 
         // eslint-disable-next-line no-console
         console.log(`received ${signal}`);
+        await server.close();
 
         process.exit(0);
       })
