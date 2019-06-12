@@ -71,7 +71,7 @@
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",
     "node-forge": "0.7.6",
-    "node-pty": "0.7.8",
+    "node-pty": "^0.8.1",
     "portfinder": "^1.0.17",
     "shell-quote": "^1.6.1",
     "strip-ansi": "^5.0.0",
