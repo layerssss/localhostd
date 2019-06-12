@@ -11,7 +11,7 @@ paths.appBuild = path.join(__dirname, "../ui_build");
 paths.servedPath = "./";
 
 const webpack = require("webpack");
-const config = require("react-scripts/config/webpack.config.prod.js");
+const config = require("react-scripts/config/webpack.config.js")("production");
 
 // removes react-dev-utils/webpackHotDevClient.js at first in the array
 // config.entry.shift();

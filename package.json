@@ -84,7 +84,7 @@
     "babel-eslint": "9.x",
     "bootswatch": "3",
     "concurrently": "^4.0.1",
-    "electron": "^3.0.0",
+    "electron": "^4.0.0",
     "electron-builder": "^20.28.4",
     "electron-rebuild": "^1.8.2",
     "eslint": "^5.6.1",
