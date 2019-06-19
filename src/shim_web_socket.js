@@ -7,7 +7,7 @@ if (isElectorn()) {
     constructor(url) {
       this.id = `${Date.now()}${Math.floor(Math.random() * 1000)}`;
 
-      ipcRenderer.on("main-message", (evt, message) => {
+      ipcRenderer.on(`main-message-${this.id}`, (evt, message) => {
         this.onmessage({
           data: message
         });
