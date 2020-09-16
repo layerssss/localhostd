@@ -70,7 +70,7 @@
     "http-proxy": "^1.17.0",
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",
-    "node-forge": "0.7.6",
+    "node-forge": "0.10.0",
     "node-pty": "^0.8.1",
     "portfinder": "^1.0.17",
     "shell-quote": "^1.6.1",
