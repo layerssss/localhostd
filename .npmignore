@@ -1,4 +1,6 @@
 /dist
 /src
+/public
+/build
 
 *.log
