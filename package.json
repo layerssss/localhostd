@@ -42,7 +42,7 @@
   "dependencies": {
     "commander": "^2.18.0",
     "default-shell": "^1.0.1",
-    "electron-updater": "^4.0.5",
+    "electron-updater": "^4.3.9",
     "execa": "^1.0.0",
     "express": "^4.16.3",
     "lodash": "^4.17.11",

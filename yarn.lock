@@ -4907,7 +4907,7 @@ electron-to-chromium@^1.3.564, electron-to-chromium@^1.3.723:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.780.tgz#f946e10dc0005a3b59b9afa2d2c92f5c421f7fc5"
   integrity sha512-2KQ9OYm9WMUNpAPA/4aerURl3hwRc9tNlpsiEj3Y8Gf7LVf26NzyLIX2v0hSagQwrS9+cWab+28A2GPKDoVNRA==
 
-electron-updater@^4.0.5:
+electron-updater@^4.3.9:
   version "4.3.9"
   resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-4.3.9.tgz#247c660bafad7c07935e1b81acd3e9a5fd733154"
   integrity sha512-LCNfedSwZfS4Hza+pDyPR05LqHtGorCStaBgVpRnfKxOlZcvpYEX0AbMeH5XUtbtGRoH2V8osbbf2qKPNb7AsA==
