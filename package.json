@@ -8,7 +8,7 @@
     "ui_watch": "LOCALHOSTD_DEV_WATCH=yes node ./bin/ui_build.js",
     "ui_build": "node ./bin/ui_build.js",
     "node_dev": "nodemon --watch lib --watch bin bin/cli.js server --debug --bind 0.0.0.0",
-    "app_deps": "electron-rebuild",
+    "app_deps": "electron-builder install-app-deps",
     "app_dev": "electron .",
     "app_build": "electron-builder build",
     "build": "yarn ui_build && yarn app_build",
@@ -27,27 +27,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "build": {
-    "appId": "in.micy.localhostd",
-    "productName": "LocalhostD",
-    "extends": null,
-    "mac": {
-      "category": "Development"
-    },
-    "linux": {
-      "target": [
-        "deb",
-        "AppImage",
-        "rpm"
-      ],
-      "category": "Development"
-    },
-    "win": {
-      "target": [
-        "nsis"
-      ]
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/layerssss/localhostd.git"
@@ -61,7 +40,6 @@
     "url": "https://github.com/layerssss/localhostd/issues"
   },
   "dependencies": {
-    "app-builder-lib": "^20.28.3",
     "commander": "^2.18.0",
     "default-shell": "^1.0.1",
     "electron-updater": "^4.0.5",
@@ -84,8 +62,7 @@
     "bootswatch": "3",
     "concurrently": "^4.0.1",
     "electron": "^4.0.0",
-    "electron-builder": "^20.28.4",
-    "electron-rebuild": "^1.8.2",
+    "electron-builder": "^22.11.7",
     "eslint": "^5.6.1",
     "eslint-config-prettier": "^3.1.0",
     "eslint-config-react-app": "^3.0.3",

@@ -1,0 +1,47 @@
+name: build
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+defaults:
+  run:
+    shell: bash
+jobs:
+  build:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        node-version: [14.x]
+        os:
+          - macos-11.0
+          - ubuntu-18.04
+          - windows-latest
+      fail-fast: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install
+        run: yarn install
+      - name: Build (pr)
+        if: github.event_name == 'pull_request'
+        run: yarn run dist --publish=never
+      - name: Build (push)
+        if: github.event_name == 'push'
+        run: yarn run dist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Archive Build Artifacts
+        uses: LabhanshAgrawal/upload-artifact@v3
+        with:
+          path: |
+            dist/*.dmg
+            dist/*.snap
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.rpm
+            dist/*.exe
