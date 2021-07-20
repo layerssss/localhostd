@@ -32,21 +32,14 @@ jobs:
       - name: Build (pr)
         if: github.event_name == 'pull_request'
         run: yarn run dist --publish=never
-      - name: Build (push)
-        if: github.event_name == 'push'
+      - name: Build (master)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: yarn run build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
-      - name: Build (push)
-        if: github.event_name == 'push'
-        run: yarn run build
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
-          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
-      - name: Build (release)
+      - name: Build (tag)
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         run: yarn run build --publish always
         env:
