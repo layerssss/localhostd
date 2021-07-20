@@ -3,9 +3,9 @@ on:
   push:
     branches:
       - master
-    tags:
-      - "v*"
   pull_request:
+  release:
+    types: [created]
 defaults:
   run:
     shell: bash
@@ -34,7 +34,21 @@ jobs:
         run: yarn run dist --publish=never
       - name: Build (push)
         if: github.event_name == 'push'
-        run: yarn run dist
+        run: yarn run build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
+      - name: Build (push)
+        if: github.event_name == 'push'
+        run: yarn run build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
+      - name: Build (release)
+        if: github.event_name == 'release' && github.event.action == 'created'
+        run: yarn run build --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}

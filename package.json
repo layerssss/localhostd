@@ -10,9 +10,8 @@
     "node_dev": "nodemon --watch lib --watch bin bin/cli.js server --debug --bind 0.0.0.0",
     "app_deps": "electron-builder install-app-deps",
     "app_dev": "electron .",
-    "app_build": "electron-builder build",
+    "app_build": "electron-builder",
     "build": "yarn ui_build && yarn app_build",
-    "dist": "yarn ui_build && yarn app_build",
     "lint": "eslint .",
     "dev": "concurrently \"yarn ui_watch\" \"yarn node_dev\"",
     "cleanup": "rm -Rf ./ui_build ./dist"
