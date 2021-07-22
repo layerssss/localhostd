@@ -9,6 +9,7 @@ import {
   ButtonGroup,
   ButtonToolbar
 } from "react-bootstrap";
+import QueryString from "query-string";
 
 import ApplicationForm from "./application_form.js";
 import ApplicationTerminal from "./application_terminal.js";
@@ -36,8 +37,10 @@ export default compose(
           window.location.hostname.endsWith(`.${a.domain}`)
       );
 
-      if (uiApplication && !uiApplication.locked && uiApplication.running)
-        window.location.reload();
+      if (uiApplication && !uiApplication.locked && uiApplication.running) {
+        const query = QueryString.parse(window.location.search);
+        window.location.href = query.redirect || "/";
+      }
 
       const activeApplication =
         uiApplication ||

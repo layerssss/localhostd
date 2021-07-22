@@ -73,6 +73,7 @@
     "is-electron": "^2.1.0",
     "nodemon": "^1.18.4",
     "prettier": "^1.14.3",
+    "query-string": "^7.0.1",
     "react": "^16.5.2",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.5.2",
