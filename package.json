@@ -41,7 +41,6 @@
   "dependencies": {
     "commander": "^2.18.0",
     "default-shell": "^1.0.1",
-    "electron-updater": "^5.2.1",
     "execa": "^1.0.0",
     "express": "^4.16.3",
     "lodash": "^4.17.11",
@@ -61,6 +60,7 @@
     "bootswatch": "3",
     "concurrently": "^4.0.1",
     "electron": "^19.0.8",
+    "electron-updater": "^5.2.1",
     "electron-builder": "^23.3.3",
     "eslint": "^5.6.1",
     "eslint-config-prettier": "^3.1.0",
