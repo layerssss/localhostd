@@ -1,6 +1,6 @@
 {
   "name": "localhostd",
-  "version": "1.0.40",
+  "version": "1.0.41",
   "description": "LocalhostD takes care of launching your web app on your development machine.",
   "main": "bin/app.js",
   "scripts": {
@@ -60,8 +60,8 @@
     "bootswatch": "3",
     "concurrently": "^4.0.1",
     "electron": "^19.0.8",
-    "electron-updater": "^5.2.1",
     "electron-builder": "^23.3.3",
+    "electron-updater": "^5.2.1",
     "eslint": "^5.6.1",
     "eslint-config-prettier": "^3.1.0",
     "eslint-config-react-app": "^3.0.3",
