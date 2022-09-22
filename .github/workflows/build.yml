@@ -16,8 +16,8 @@ jobs:
       matrix:
         node-version: [16.x]
         os:
-          - macos-11.0
-          - ubuntu-18.04
+          - macos-latest
+          - ubuntu-latest
           - windows-latest
       fail-fast: false
     steps:
