@@ -167,7 +167,7 @@ class ApplicationForm extends React.Component {
           <FormControl
             type="number"
             min={0}
-            step={60}
+            step={1}
             value={this.state.timeout}
             onChange={ev =>
               this.setState({
