@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json.schemastore.org/electron-builder",
+  "$schema": "https://json.schemastore.org/electron-builder",
   "appId": "in.micy.localhostd",
   "productName": "LocalhostD",
   "extends": null,
@@ -8,7 +8,10 @@
       "target": "default",
       "arch": ["x64"]
     },
-    "category": "Development"
+    "category": "Development",
+    "hardenedRuntime": true,
+    "entitlements": "build/entitlements.mac.plist",
+    "entitlementsInherit": "build/entitlements.mac.plist"
   },
   "linux": {
     "target": ["deb", "AppImage", "rpm"],
