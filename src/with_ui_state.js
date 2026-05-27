@@ -1,120 +1,75 @@
-import React from "react";
-import { wrapDisplayName } from "recompose";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { toast } from "react-toastify";
-
 import ShimWebSocket from "./shim_web_socket.js";
 
 let counter = 0;
 
-const withUIState = WrappedComponent =>
-  class extends React.Component {
-    static displayName = wrapDisplayName(WrappedComponent, "withUIState");
+export default function useUIState(handleMessages = false) {
+  const [loaded, setLoaded] = useState(false);
+  const [uiState, setUiState] = useState({});
+  const [terminalOutputEventName] = useState(
+    () => `localhostdterminaloutput${(counter += 1)}`
+  );
+  const socketRef = useRef(null);
+  const loadedRef = useRef(false);
+  loadedRef.current = loaded;
 
-    static defaultProps = {
-      handleMessages: false
-    };
+  const doAction = useCallback((name, parameters) => {
+    if (!loadedRef.current) return;
+    socketRef.current?.send(JSON.stringify({ name, parameters }));
+  }, []);
 
-    state = {
-      loaded: false,
-      terminalOutputEventName: `localhostdterminaloutput${(counter += 1)}`,
-      uiState: {}
-    };
-
-    doAction(name, parameters) {
-      if (!this.state.loaded) return;
-
-      this.socket.send(
-        JSON.stringify({
-          name: name,
-          parameters: parameters
-        })
+  useEffect(() => {
+    const initSocket = () => {
+      const socket = new ShimWebSocket(
+        `${window.location.origin.replace(/^http/, "ws")}/_bnb_ui_state`
       );
-    }
+      socketRef.current = socket;
 
-    componentDidMount() {
-      const { handleMessages } = this.props;
-
-      this.terminalHistory = {};
-      const initSocket = () => {
-        this.socket = new ShimWebSocket(
-          `${window.location.origin.replace(/^http/, "ws")}/_bnb_ui_state`
+      socket.onmessage = messageEvent => {
+        const { state, message, error, terminalOutput } = JSON.parse(
+          messageEvent.data
         );
 
-        this.socket.onmessage = messageEvent => {
-          const { state, message, error, terminalOutput } = JSON.parse(
-            messageEvent.data
+        if (state) {
+          setUiState(prev => ({ ...prev, ...state }));
+          setLoaded(true);
+        }
+
+        if (handleMessages) {
+          if (message) toast.success(message);
+          if (error) toast.error(error.message);
+        }
+
+        if (terminalOutput) {
+          window.dispatchEvent(
+            new CustomEvent(terminalOutputEventName, {
+              detail: {
+                applicationName: terminalOutput.applicationName,
+                dataString: terminalOutput.dataString
+              }
+            })
           );
-
-          if (state) {
-            this.setState(({ uiState }) => ({
-              uiState: {
-                ...uiState,
-                ...state
-              },
-              loaded: true
-            }));
-          }
-
-          if (handleMessages) {
-            if (message) {
-              toast.success(message);
-            }
-
-            if (error) {
-              toast.error(error.message);
-            }
-          }
-
-          if (terminalOutput) {
-            window.dispatchEvent(
-              new CustomEvent(this.state.terminalOutputEventName, {
-                detail: {
-                  applicationName: terminalOutput.applicationName,
-                  dataString: terminalOutput.dataString
-                }
-              })
-            );
-          }
-        };
-
-        this.socket.onerror = errorEvent => {
-          toast.error("Connection error.");
-
-          this.setState({
-            loaded: false
-          });
-        };
-
-        this.socket.onclose = () => {
-          this.setState({
-            loaded: false
-          });
-
-          setTimeout(initSocket, 1000);
-        };
+        }
       };
 
-      initSocket();
-    }
+      socket.onerror = () => {
+        toast.error("Connection error.");
+        setLoaded(false);
+      };
 
-    componentWillUnmount() {
-      this.socket.close();
-    }
+      socket.onclose = () => {
+        setLoaded(false);
+        setTimeout(initSocket, 1000);
+      };
+    };
 
-    render() {
-      return (
-        <>
-          {this.state.loaded && (
-            <WrappedComponent
-              uiState={this.state.uiState}
-              doAction={this.doAction.bind(this)}
-              terminalOutputEventName={this.state.terminalOutputEventName}
-              {...this.props}
-            />
-          )}
-        </>
-      );
-    }
-  };
+    initSocket();
 
-export default withUIState;
+    return () => {
+      if (socketRef.current) socketRef.current.close();
+    };
+  }, []);
+
+  return { loaded, uiState, doAction, terminalOutputEventName };
+}

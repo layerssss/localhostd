@@ -1,10 +1,8 @@
-import React from "react";
-import { compose, withProps } from "recompose";
+import React, { useState } from "react";
 import _ from "lodash";
 import {
   Nav,
-  NavItem,
-  Panel,
+  Card,
   Button,
   ButtonGroup,
   ButtonToolbar
@@ -15,341 +13,276 @@ import ApplicationForm from "./application_form.js";
 import ApplicationTerminal from "./application_terminal.js";
 import OpenUrl from "./open_url.js";
 import OpenBlob from "./open_blob.js";
-import withUIState from "./with_ui_state.js";
+import useUIState from "./with_ui_state.js";
 
-export default compose(
-  withProps({ handleMessages: true }),
-  withUIState
-)(
-  class LocalhostDConsole extends React.Component {
-    state = {
-      activeApplicationIndex: -1,
-      creatingApplication: false,
-      tab: "terminal"
-    };
+export default function LocalhostDConsole() {
+  const { loaded, uiState, doAction } = useUIState(true);
+  const [activeApplicationIndex, setActiveApplicationIndex] = useState(-1);
+  const [creatingApplication, setCreatingApplication] = useState(false);
+  const [tab, setTab] = useState("terminal");
 
-    render() {
-      const { uiState, doAction } = this.props;
+  if (!loaded) return null;
 
-      const uiApplication = uiState.applications.find(
-        a =>
-          a.domain === window.location.hostname ||
-          window.location.hostname.endsWith(`.${a.domain}`)
-      );
+  const uiApplication = (uiState.applications || []).find(
+    a =>
+      a.domain === window.location.hostname ||
+      window.location.hostname.endsWith(`.${a.domain}`)
+  );
 
-      if (uiApplication && !uiApplication.locked && uiApplication.running) {
-        const query = QueryString.parse(window.location.search);
-        window.location.href = query.redirect || "/";
-      }
+  if (uiApplication && !uiApplication.locked && uiApplication.running) {
+    const query = QueryString.parse(window.location.search);
+    window.location.href = query.redirect || "/";
+  }
 
-      const activeApplication =
-        uiApplication ||
-        uiState.applications[this.state.activeApplicationIndex];
+  const activeApplication =
+    uiApplication || (uiState.applications || [])[activeApplicationIndex];
 
-      return (
-        <>
-          {!uiApplication && (
-            <div
-              style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                bottom: 0,
-                width: 300,
-                padding: 10,
-                overflowY: "auto"
-              }}
-            >
-              <Nav bsStyle="pills" stacked>
-                {_.sortBy(
-                  uiState.applications.map((a, index) => ({
-                    ...a,
-                    index
-                  })),
-                  a => a.name
-                ).map(application => (
-                  <NavItem
-                    key={application.name}
-                    active={
-                      this.state.activeApplicationIndex === application.index
-                    }
+  return (
+    <>
+      {!uiApplication && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            width: 300,
+            padding: 10,
+            overflowY: "auto"
+          }}
+        >
+          <Nav variant="pills" className="flex-column">
+            {_.sortBy(
+              (uiState.applications || []).map((a, index) => ({
+                ...a,
+                index
+              })),
+              a => a.name
+            ).map(application => (
+              <Nav.Item key={application.name}>
+                <Nav.Link
+                  active={activeApplicationIndex === application.index}
+                  onClick={() => {
+                    setActiveApplicationIndex(application.index);
+                    setCreatingApplication(false);
+                  }}
+                >
+                  <span
+                    className={`fa fa-fw ${
+                      application.locked
+                        ? "fa-spin fa-spinner"
+                        : application.running
+                        ? "fa-cube"
+                        : ""
+                    }`}
+                  />
+                  {application.name}
+                </Nav.Link>
+              </Nav.Item>
+            ))}
+            <Nav.Item>
+              <Nav.Link
+                active={creatingApplication}
+                onClick={() => {
+                  setCreatingApplication(true);
+                  setActiveApplicationIndex(-1);
+                }}
+              >
+                <span className="fa fa-fw fa-plus" />
+                New application
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                active={!creatingApplication && !activeApplication}
+                onClick={() => {
+                  setCreatingApplication(false);
+                  setActiveApplicationIndex(-1);
+                }}
+              >
+                <span className="fa fa-fw fa-info-circle" />
+                Tips
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </div>
+      )}
+      <div
+        style={{
+          position: "fixed",
+          left: uiApplication ? 0 : 300,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          display: "flex",
+          flexFlow: "column nowrap",
+          overflow: "hidden"
+        }}
+      >
+        {creatingApplication && (
+          <div style={{ flex: "1 1 auto", overflowY: "auto", padding: 10 }}>
+            <Card>
+              <Card.Header>New application</Card.Header>
+              <Card.Body>
+                <ApplicationForm
+                  application={{
+                    dir: uiState.homedir,
+                    env: {},
+                    timeout: 3600
+                  }}
+                  creating
+                  onSubmit={applicationData => {
+                    doAction("CreateApplication", { applicationData });
+                    setCreatingApplication(false);
+                  }}
+                >
+                  <Button onClick={() => setCreatingApplication(false)}>
+                    Cancel
+                  </Button>
+                </ApplicationForm>
+              </Card.Body>
+            </Card>
+          </div>
+        )}
+        {!creatingApplication && !!activeApplication && (
+          <React.Fragment key={activeApplication.name}>
+            <Card style={{ flex: "0 0 auto", margin: 0, borderRadius: 0 }}>
+              <Card.Body>
+                <ButtonToolbar className="gap-2">
+                  {!uiApplication && (
+                    <Button onClick={() => OpenUrl(activeApplication.origin)}>
+                      <span className="fa fa-fw fa-globe" />
+                      {activeApplication.origin}
+                    </Button>
+                  )}
+                  {uiApplication && (
+                    <Button
+                      onClick={() => OpenUrl(`http://${uiState.uiHost}`)}
+                    >
+                      <span className="fa fa-fw fa-home" />
+                      View all applications
+                    </Button>
+                  )}
+                  <Button
+                    disabled={activeApplication.locked}
                     onClick={() =>
-                      this.setState({
-                        activeApplicationIndex: application.index,
-                        creatingApplication: false
-                      })
+                      doAction(
+                        activeApplication.running
+                          ? "StopApplication"
+                          : "StartApplication",
+                        { applicationName: activeApplication.name }
+                      )
                     }
                   >
                     <span
-                      className={`fa fa-fw ${
-                        application.locked
-                          ? "fa-spin fa-spinner"
-                          : application.running
-                          ? "fa-cube"
-                          : ""
+                      className={`fa fa-fw fa-${
+                        activeApplication.locked
+                          ? "spinner fa-spin"
+                          : activeApplication.running
+                          ? "stop"
+                          : "play"
                       }`}
                     />
-                    {application.name}
-                  </NavItem>
-                ))}
-                <NavItem
-                  active={this.state.creatingApplication}
-                  onClick={() =>
-                    this.setState({
-                      creatingApplication: true,
-                      activeApplicationIndex: -1
-                    })
-                  }
-                >
-                  <span className="fa fa-fw fa-plus" />
-                  New application
-                </NavItem>
-                <NavItem
-                  active={!this.state.creatingApplication && !activeApplication}
-                  onClick={() =>
-                    this.setState({
-                      creatingApplication: false,
-                      activeApplicationIndex: -1
-                    })
-                  }
-                >
-                  <span className="fa fa-fw fa-info-circle" />
-                  Tips
-                </NavItem>
-              </Nav>
-            </div>
-          )}
-          <div
-            style={{
-              position: "fixed",
-              left: uiApplication ? 0 : 300,
-              top: 0,
-              right: 0,
-              bottom: 0,
-              display: "flex",
-              flexFlow: "column nowrap",
-              overflow: "hidden"
-            }}
-          >
-            {this.state.creatingApplication && (
+                  </Button>
+                  {!uiApplication && (
+                    <Button
+                      disabled={
+                        activeApplication.locked || !activeApplication.running
+                      }
+                      onClick={() =>
+                        doAction("RestartApplication", {
+                          applicationName: activeApplication.name
+                        })
+                      }
+                    >
+                      <span className="fa fa-fw fa-repeat" />
+                    </Button>
+                  )}
+                  <ButtonGroup>
+                    <Button
+                      variant={tab === "terminal" ? "primary" : "outline-primary"}
+                      onClick={() => setTab("terminal")}
+                    >
+                      <span className="fa fa-fw fa-terminal" />
+                      Terminal
+                    </Button>
+                    <Button
+                      variant={tab === "details" ? "primary" : "outline-primary"}
+                      onClick={() => setTab("details")}
+                    >
+                      <span className="fa fa-fw fa-info" />
+                      Details
+                    </Button>
+                  </ButtonGroup>
+                </ButtonToolbar>
+              </Card.Body>
+            </Card>
+            {tab === "details" && (
               <div
-                style={{
-                  flex: "1 1 auto",
-                  overflowY: "auto",
-                  padding: 10
-                }}
+                style={{ flex: "1 1 auto", overflowY: "auto", padding: 10 }}
               >
-                <Panel>
-                  <Panel.Heading>New application</Panel.Heading>
-                  <Panel.Body>
+                <Card>
+                  <Card.Header>Details</Card.Header>
+                  <Card.Body>
                     <ApplicationForm
-                      application={{
-                        dir: uiState.homedir,
-                        env: {},
-                        timeout: 3600
-                      }}
-                      creating
+                      application={activeApplication}
                       onSubmit={applicationData => {
-                        doAction("CreateApplication", {
-                          applicationData
-                        });
-
-                        this.setState({
-                          creatingApplication: false
-                        });
+                        doAction("CreateApplication", { applicationData });
                       }}
                     >
                       <Button
-                        onClick={ev =>
-                          this.setState({
-                            creatingApplication: false
+                        variant="danger"
+                        onClick={() =>
+                          doAction("DeleteApplication", {
+                            applicationName: activeApplication.name
                           })
                         }
                       >
-                        Cancel
+                        Delete
                       </Button>
                     </ApplicationForm>
-                  </Panel.Body>
-                </Panel>
+                  </Card.Body>
+                </Card>
               </div>
             )}
-            {!this.state.creatingApplication && !!activeApplication && (
-              <React.Fragment key={activeApplication.name}>
-                <Panel
-                  style={{
-                    flex: "0 0 auto",
-                    margin: 0,
-                    borderRadius: 0
-                  }}
-                >
-                  <Panel.Body>
-                    <ButtonToolbar>
-                      {!uiApplication && (
-                        <Button
-                          onClick={() => OpenUrl(activeApplication.origin)}
-                        >
-                          <span className="fa fa-fw fa-globe" />
-                          {activeApplication.origin}
-                        </Button>
-                      )}
-                      {uiApplication && (
-                        <Button
-                          onClick={() => OpenUrl(`http://${uiState.uiHost}`)}
-                        >
-                          <span className="fa fa-fw fa-home" />
-                          View all applications
-                        </Button>
-                      )}
-                      <Button
-                        disabled={activeApplication.locked}
-                        onClick={() =>
-                          doAction(
-                            activeApplication.running
-                              ? "StopApplication"
-                              : "StartApplication",
-                            {
-                              applicationName: activeApplication.name
-                            }
-                          )
-                        }
-                      >
-                        <span
-                          className={`fa fa-fw fa-${
-                            activeApplication.locked
-                              ? "spinner fa-spin"
-                              : activeApplication.running
-                              ? "stop"
-                              : "play"
-                          }`}
-                        />
-                      </Button>
-                      {!uiApplication && (
-                        <Button
-                          disabled={
-                            activeApplication.locked ||
-                            !activeApplication.running
-                          }
-                          onClick={() =>
-                            doAction("RestartApplication", {
-                              applicationName: activeApplication.name
-                            })
-                          }
-                        >
-                          <span className="fa fa-fw fa-repeat" />
-                        </Button>
-                      )}
-                      <ButtonGroup>
-                        <Button
-                          active={this.state.tab === "terminal"}
-                          onClick={() =>
-                            this.setState({
-                              tab: "terminal"
-                            })
-                          }
-                        >
-                          <span className="fa fa-fw fa-terminal" />
-                          Terminal
-                        </Button>
-                        <Button
-                          active={this.state.tab === "details"}
-                          onClick={() =>
-                            this.setState({
-                              tab: "details"
-                            })
-                          }
-                        >
-                          <span className="fa fa-fw fa-info" />
-                          Details
-                        </Button>
-                      </ButtonGroup>
-                    </ButtonToolbar>
-                  </Panel.Body>
-                </Panel>
-                {this.state.tab === "details" && (
-                  <div
-                    style={{
-                      flex: "1 1 auto",
-                      overflowY: "auto",
-                      padding: 10
-                    }}
-                  >
-                    <Panel>
-                      <Panel.Heading>Details</Panel.Heading>
-                      <Panel.Body>
-                        <ApplicationForm
-                          application={activeApplication}
-                          onSubmit={applicationData => {
-                            doAction("CreateApplication", {
-                              applicationData
-                            });
-                          }}
-                        >
-                          <Button
-                            bsStyle="danger"
-                            onClick={() =>
-                              doAction("DeleteApplication", {
-                                applicationName: activeApplication.name
-                              })
-                            }
-                          >
-                            Delete
-                          </Button>
-                        </ApplicationForm>
-                      </Panel.Body>
-                    </Panel>
-                  </div>
-                )}
-                {this.state.tab === "terminal" && (
-                  <div
-                    style={{
-                      flex: "1 0 auto",
-                      position: "relative"
-                    }}
-                  >
-                    <ApplicationTerminal
-                      applicationName={activeApplication.name}
-                    />
-                  </div>
-                )}
-              </React.Fragment>
-            )}
-            {!this.state.creatingApplication && !activeApplication && (
-              <div
-                style={{
-                  flex: "1 1 auto",
-                  overflowY: "auto",
-                  padding: 10
-                }}
-              >
-                <Panel>
-                  <Panel.Heading>Tips:</Panel.Heading>
-                  <Panel.Body>
-                    <p>{uiState.usageMessage}</p>
-                    <p>
-                      You can also download the self-signed CA for signing SSL
-                      connections.
-                      <a
-                        href="localhostd.ca.crt"
-                        disabled={!uiState.caCertificate}
-                        onClick={event => {
-                          event.preventDefault();
-                          OpenBlob(
-                            "localhostd.ca.crt",
-                            new Blob([uiState.caCertificate])
-                          );
-                        }}
-                      >
-                        <span className="fa fa-fw fa-download" />
-                        SSL CA certificate
-                      </a>
-                    </p>
-                  </Panel.Body>
-                </Panel>
+            {tab === "terminal" && (
+              <div style={{ flex: "1 0 auto", position: "relative" }}>
+                <ApplicationTerminal
+                  applicationName={activeApplication.name}
+                />
               </div>
             )}
+          </React.Fragment>
+        )}
+        {!creatingApplication && !activeApplication && (
+          <div style={{ flex: "1 1 auto", overflowY: "auto", padding: 10 }}>
+            <Card>
+              <Card.Header>Tips</Card.Header>
+              <Card.Body>
+                <p>{uiState.usageMessage}</p>
+                <p>
+                  You can also download the self-signed CA for signing SSL
+                  connections.{" "}
+                  <a
+                    href="localhostd.ca.crt"
+                    onClick={event => {
+                      event.preventDefault();
+                      if (!uiState.caCertificate) return;
+                      OpenBlob(
+                        "localhostd.ca.crt",
+                        new Blob([uiState.caCertificate])
+                      );
+                    }}
+                  >
+                    <span className="fa fa-fw fa-download" />
+                    SSL CA certificate
+                  </a>
+                </p>
+              </Card.Body>
+            </Card>
           </div>
-        </>
-      );
-    }
-  }
-);
+        )}
+      </div>
+    </>
+  );
+}

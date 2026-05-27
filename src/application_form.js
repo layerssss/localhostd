@@ -2,14 +2,10 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
   Form,
-  FormGroup,
-  FormControl,
-  Checkbox,
-  ControlLabel,
   InputGroup,
   Button,
   ButtonToolbar,
-  Panel
+  Accordion
 } from "react-bootstrap";
 
 class ApplicationForm extends React.Component {
@@ -82,215 +78,166 @@ class ApplicationForm extends React.Component {
           });
         }}
       >
-        <FormGroup
-          controlId={`${this.state.id}_name`}
-          validationState={this.isNameValid() ? "success" : "error"}
-        >
-          <ControlLabel>Name:</ControlLabel>
-          <FormControl
+        <Form.Group controlId={`${this.state.id}_name`} className="mb-3">
+          <Form.Label>Name:</Form.Label>
+          <Form.Control
             type="text"
             required
             readOnly={!this.props.creating}
             value={this.state.name}
-            onChange={ev =>
-              this.setState({
-                name: ev.target.value
-              })
-            }
+            isValid={!!this.isNameValid()}
+            isInvalid={!this.isNameValid()}
+            onChange={ev => this.setState({ name: ev.target.value })}
           />
-        </FormGroup>
-        <FormGroup controlId={`${this.state.id}_hostname`}>
-          <ControlLabel>Hostname:</ControlLabel>
-          <FormControl
+        </Form.Group>
+        <Form.Group controlId={`${this.state.id}_hostname`} className="mb-3">
+          <Form.Label>Hostname:</Form.Label>
+          <Form.Control
             type="text"
             value={this.state.hostname}
-            onChange={ev =>
-              this.setState({
-                hostname: ev.target.value
-              })
-            }
+            onChange={ev => this.setState({ hostname: ev.target.value })}
             placeholder={`${this.state.name}.test`}
           />
-        </FormGroup>
-        <Checkbox
+        </Form.Group>
+        <Form.Check
+          className="mb-3"
+          type="checkbox"
+          id={`${this.state.id}_ssl`}
+          label="SSL"
           checked={this.state.ssl}
           onChange={ev => this.setState({ ssl: ev.target.checked })}
-        >
-          SSL
-        </Checkbox>
-        <FormGroup
-          controlId={`${this.state.id}_command`}
-          validationState={this.isCommandValid() ? "success" : "error"}
-        >
-          <ControlLabel>Command:</ControlLabel>
-          <FormControl
+        />
+        <Form.Group controlId={`${this.state.id}_command`} className="mb-3">
+          <Form.Label>Command:</Form.Label>
+          <Form.Control
             type="text"
             value={this.state.command}
-            onChange={ev =>
-              this.setState({
-                command: ev.target.value
-              })
-            }
+            isValid={!!this.isCommandValid()}
+            isInvalid={!this.isCommandValid()}
+            onChange={ev => this.setState({ command: ev.target.value })}
           />
-        </FormGroup>
-        <FormGroup controlId={`${this.state.id}_dir`} validationState="success">
-          <ControlLabel>Working directory:</ControlLabel>
-          <FormControl
+        </Form.Group>
+        <Form.Group controlId={`${this.state.id}_dir`} className="mb-3">
+          <Form.Label>Working directory:</Form.Label>
+          <Form.Control
             type="text"
             value={this.state.dir}
-            onChange={ev =>
-              this.setState({
-                dir: ev.target.value
-              })
-            }
+            onChange={ev => this.setState({ dir: ev.target.value })}
           />
-        </FormGroup>
-        <FormGroup controlId={`${this.state.id}_out`} validationState="success">
-          <ControlLabel>Output path (optional):</ControlLabel>
-          <FormControl
+        </Form.Group>
+        <Form.Group controlId={`${this.state.id}_out`} className="mb-3">
+          <Form.Label>Output path (optional):</Form.Label>
+          <Form.Control
             type="text"
             value={this.state.out}
-            onChange={ev =>
-              this.setState({
-                out: ev.target.value
-              })
-            }
+            onChange={ev => this.setState({ out: ev.target.value })}
           />
-        </FormGroup>
-        <FormGroup
-          controlId={`${this.state.id}_timeout`}
-          validationState="success"
-        >
-          <ControlLabel>
+        </Form.Group>
+        <Form.Group controlId={`${this.state.id}_timeout`} className="mb-3">
+          <Form.Label>
             Timeout (idle seconds before shutting the application down,
             optional):
-          </ControlLabel>
-          <FormControl
+          </Form.Label>
+          <Form.Control
             type="number"
             min={0}
             step={1}
             value={this.state.timeout}
             onChange={ev =>
-              this.setState({
-                timeout: Number(ev.target.value) || ""
-              })
+              this.setState({ timeout: Number(ev.target.value) || "" })
             }
           />
-        </FormGroup>
-        <FormGroup
-          controlId={`${this.state.id}_port`}
-          validationState={this.isPortValid() ? "success" : "error"}
-        >
-          <ControlLabel>Port:</ControlLabel>
-          <FormControl
+        </Form.Group>
+        <Form.Group controlId={`${this.state.id}_port`} className="mb-3">
+          <Form.Label>Port:</Form.Label>
+          <Form.Control
             type="number"
             min={1000}
             value={this.state.port}
-            onChange={ev =>
-              this.setState({
-                port: Number(ev.target.value)
-              })
-            }
+            isValid={this.isPortValid()}
+            isInvalid={!this.isPortValid()}
+            onChange={ev => this.setState({ port: Number(ev.target.value) })}
           />
-        </FormGroup>
-        <Panel id={`${this.state.id}_env`}>
-          <Panel.Heading>
-            <Panel.Title toggle>Environment:</Panel.Title>
-          </Panel.Heading>
-          <Panel.Collapse>
-            <Panel.Body>
-              <FormGroup>
-                <FormControl
+        </Form.Group>
+        <Accordion className="mb-3">
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>Environment</Accordion.Header>
+            <Accordion.Body>
+              <Form.Group className="mb-3">
+                <Form.Control
                   type="text"
                   value={this.state.envSearch}
-                  placeholder={"type to search..."}
-                  onChange={ev =>
-                    this.setState({
-                      envSearch: ev.target.value
-                    })
-                  }
+                  placeholder="type to search..."
+                  onChange={ev => this.setState({ envSearch: ev.target.value })}
                 />
-              </FormGroup>
+              </Form.Group>
               {Object.keys(this.state.env)
                 .filter(
                   k =>
-                    -1 !==
-                    k.toLowerCase().indexOf(this.state.envSearch.toLowerCase())
+                    k
+                      .toLowerCase()
+                      .indexOf(this.state.envSearch.toLowerCase()) !== -1
                 )
                 .sort()
                 .map(envKey => (
-                  <FormGroup
-                    id={envKey}
+                  <Form.Group
+                    key={envKey}
                     controlId={`${this.state.id}_env_${envKey}`}
-                    validationState="success"
+                    className="mb-2"
                   >
-                    <ControlLabel>{envKey}:</ControlLabel>
+                    <Form.Label>{envKey}:</Form.Label>
                     <InputGroup>
-                      <FormControl
+                      <Form.Control
                         type="text"
                         value={this.state.env[envKey]}
                         onChange={ev =>
                           this.setState({
-                            env: {
-                              ...this.state.env,
-                              [envKey]: ev.target.value
-                            }
+                            env: { ...this.state.env, [envKey]: ev.target.value }
                           })
                         }
                       />
-                      <InputGroup.Button>
-                        <Button
-                          onClick={() => {
-                            delete this.state.env[envKey];
-                            this.forceUpdate();
-                          }}
-                        >
-                          Delete
-                        </Button>
-                      </InputGroup.Button>
+                      <Button
+                        variant="outline-secondary"
+                        onClick={() => {
+                          const env = { ...this.state.env };
+                          delete env[envKey];
+                          this.setState({ env });
+                        }}
+                      >
+                        Delete
+                      </Button>
                     </InputGroup>
-                  </FormGroup>
+                  </Form.Group>
                 ))}
-            </Panel.Body>
-          </Panel.Collapse>
-        </Panel>
-        <FormGroup validationState="success">
-          <InputGroup>
-            <FormControl
-              type="text"
-              placeholder="new environment variable"
-              value={this.state.envNewKey}
-              onChange={ev =>
-                this.setState({
-                  envNewKey: ev.target.value
-                })
-              }
-              onKeyPress={ev => {
-                if (ev.charCode !== 13) return;
-                ev.preventDefault();
-                this.newEnvButtonRef.current.click();
-              }}
-            />
-            <InputGroup.Button>
-              <Button
-                ref={this.newEnvButtonRef}
-                onClick={() =>
-                  this.setState({
-                    env: {
-                      ...this.state.env,
-                      [this.state.envNewKey]: ""
-                    },
-                    envNewKey: ""
-                  })
-                }
-              >
-                Add environment variable
-              </Button>
-            </InputGroup.Button>
-          </InputGroup>
-        </FormGroup>
-        <ButtonToolbar>
-          <Button bsStyle="primary" type="submit" disabled={!this.isValid()}>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+        <InputGroup className="mb-3">
+          <Form.Control
+            type="text"
+            placeholder="new environment variable"
+            value={this.state.envNewKey}
+            onChange={ev => this.setState({ envNewKey: ev.target.value })}
+            onKeyPress={ev => {
+              if (ev.charCode !== 13) return;
+              ev.preventDefault();
+              this.newEnvButtonRef.current.click();
+            }}
+          />
+          <Button
+            ref={this.newEnvButtonRef}
+            onClick={() =>
+              this.setState({
+                env: { ...this.state.env, [this.state.envNewKey]: "" },
+                envNewKey: ""
+              })
+            }
+          >
+            Add environment variable
+          </Button>
+        </InputGroup>
+        <ButtonToolbar className="gap-2">
+          <Button variant="primary" type="submit" disabled={!this.isValid()}>
             {this.props.creating ? "Create" : "Save changes"}
           </Button>
           {children}
