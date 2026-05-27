@@ -1,7 +1,6 @@
 import {
   useEffect,
   useRef,
-  forwardRef,
   useImperativeHandle
 } from "react";
 import _ from "lodash";
@@ -9,13 +8,13 @@ import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import "@xterm/xterm/css/xterm.css";
 
-const XTerm = forwardRef(({ onData, onResize }, ref) => {
+function XTerm({ onData, onResize, ref }) {
   const containerRef = useRef(null);
   const xtermRef = useRef(null);
   const onDataRef = useRef(onData);
   const onResizeRef = useRef(onResize);
-  onDataRef.current = onData;
-  onResizeRef.current = onResize;
+  onDataRef.current = onData; // eslint-disable-line react-hooks/refs
+  onResizeRef.current = onResize; // eslint-disable-line react-hooks/refs
 
   useImperativeHandle(ref, () => ({
     write: dataString => xtermRef.current?.write(dataString)
@@ -50,8 +49,6 @@ const XTerm = forwardRef(({ onData, onResize }, ref) => {
       style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
     />
   );
-});
-
-XTerm.displayName = "XTerm";
+}
 
 export default XTerm;
