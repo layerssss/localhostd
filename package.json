@@ -52,6 +52,7 @@
     "strip-ansi": "^7.0.0",
     "update-notifier": "^7.0.0",
     "which": "^7.0.0",
+    "electron-updater": "^6.0.0",
     "ws": "^8.0.0"
   },
   "devDependencies": {
@@ -67,7 +68,6 @@
     "css-loader": "^7.0.0",
     "electron": "^42.0.0",
     "electron-builder": "^26.0.0",
-    "electron-updater": "^6.0.0",
     "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-react-hooks": "^7.1.1",

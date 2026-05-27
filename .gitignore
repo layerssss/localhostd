@@ -4,3 +4,4 @@
 
 *.log
 .claude
+.DS_Store
