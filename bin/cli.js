@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
-const Path = require("path");
-const { program } = require("commander");
-const Server = require("../lib/Server.js");
-const UpdateNotifier = require("update-notifier");
-const pkg = require("../package.json");
-const waitDeath = require("../lib/waitDeath.js");
+import Path from "path";
+import { program } from "commander";
+import updateNotifier from "update-notifier";
+import pkg from "../package.json" with { type: "json" };
 
-UpdateNotifier({ pkg }).notify();
+import Server from "../lib/Server.js";
+import waitDeath from "../lib/waitDeath.js";
+
+updateNotifier({ pkg }).notify();
 
 program
   .version(pkg.version)
