@@ -7,6 +7,21 @@ import {
   ButtonGroup,
   ButtonToolbar
 } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSpinner,
+  faCube,
+  faPlus,
+  faCircleInfo,
+  faGlobe,
+  faHouse,
+  faStop,
+  faPlay,
+  faArrowRotateRight,
+  faTerminal,
+  faInfo,
+  faDownload
+} from "@fortawesome/free-solid-svg-icons";
 import QueryString from "query-string";
 
 import ApplicationForm from "./application_form.js";
@@ -67,15 +82,13 @@ export default function LocalhostDConsole() {
                     setCreatingApplication(false);
                   }}
                 >
-                  <span
-                    className={`fa fa-fw ${
-                      application.locked
-                        ? "fa-spin fa-spinner"
-                        : application.running
-                        ? "fa-cube"
-                        : ""
-                    }`}
-                  />
+                  {application.locked ? (
+                    <FontAwesomeIcon icon={faSpinner} fixedWidth spin />
+                  ) : application.running ? (
+                    <FontAwesomeIcon icon={faCube} fixedWidth />
+                  ) : (
+                    <FontAwesomeIcon icon={faCube} fixedWidth style={{ visibility: "hidden" }} />
+                  )}{" "}
                   {application.name}
                 </Nav.Link>
               </Nav.Item>
@@ -88,8 +101,7 @@ export default function LocalhostDConsole() {
                   setActiveApplicationIndex(-1);
                 }}
               >
-                <span className="fa fa-fw fa-plus" />
-                New application
+                <FontAwesomeIcon icon={faPlus} fixedWidth /> New application
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
@@ -100,8 +112,7 @@ export default function LocalhostDConsole() {
                   setActiveApplicationIndex(-1);
                 }}
               >
-                <span className="fa fa-fw fa-info-circle" />
-                Tips
+                <FontAwesomeIcon icon={faCircleInfo} fixedWidth /> Tips
               </Nav.Link>
             </Nav.Item>
           </Nav>
@@ -151,7 +162,7 @@ export default function LocalhostDConsole() {
                 <ButtonToolbar className="gap-2">
                   {!uiApplication && (
                     <Button onClick={() => OpenUrl(activeApplication.origin)}>
-                      <span className="fa fa-fw fa-globe" />
+                      <FontAwesomeIcon icon={faGlobe} fixedWidth />{" "}
                       {activeApplication.origin}
                     </Button>
                   )}
@@ -159,8 +170,8 @@ export default function LocalhostDConsole() {
                     <Button
                       onClick={() => OpenUrl(`http://${uiState.uiHost}`)}
                     >
-                      <span className="fa fa-fw fa-home" />
-                      View all applications
+                      <FontAwesomeIcon icon={faHouse} fixedWidth /> View all
+                      applications
                     </Button>
                   )}
                   <Button
@@ -174,15 +185,13 @@ export default function LocalhostDConsole() {
                       )
                     }
                   >
-                    <span
-                      className={`fa fa-fw fa-${
-                        activeApplication.locked
-                          ? "spinner fa-spin"
-                          : activeApplication.running
-                          ? "stop"
-                          : "play"
-                      }`}
-                    />
+                    {activeApplication.locked ? (
+                      <FontAwesomeIcon icon={faSpinner} fixedWidth spin />
+                    ) : activeApplication.running ? (
+                      <FontAwesomeIcon icon={faStop} fixedWidth />
+                    ) : (
+                      <FontAwesomeIcon icon={faPlay} fixedWidth />
+                    )}
                   </Button>
                   {!uiApplication && (
                     <Button
@@ -195,23 +204,25 @@ export default function LocalhostDConsole() {
                         })
                       }
                     >
-                      <span className="fa fa-fw fa-repeat" />
+                      <FontAwesomeIcon icon={faArrowRotateRight} fixedWidth />
                     </Button>
                   )}
                   <ButtonGroup>
                     <Button
-                      variant={tab === "terminal" ? "primary" : "outline-primary"}
+                      variant={
+                        tab === "terminal" ? "primary" : "outline-primary"
+                      }
                       onClick={() => setTab("terminal")}
                     >
-                      <span className="fa fa-fw fa-terminal" />
-                      Terminal
+                      <FontAwesomeIcon icon={faTerminal} fixedWidth /> Terminal
                     </Button>
                     <Button
-                      variant={tab === "details" ? "primary" : "outline-primary"}
+                      variant={
+                        tab === "details" ? "primary" : "outline-primary"
+                      }
                       onClick={() => setTab("details")}
                     >
-                      <span className="fa fa-fw fa-info" />
-                      Details
+                      <FontAwesomeIcon icon={faInfo} fixedWidth /> Details
                     </Button>
                   </ButtonGroup>
                 </ButtonToolbar>
@@ -274,8 +285,8 @@ export default function LocalhostDConsole() {
                       );
                     }}
                   >
-                    <span className="fa fa-fw fa-download" />
-                    SSL CA certificate
+                    <FontAwesomeIcon icon={faDownload} fixedWidth /> SSL CA
+                    certificate
                   </a>
                 </p>
               </Card.Body>
