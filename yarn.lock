@@ -4134,10 +4134,10 @@ node-gyp@^12.2.0:
     undici "^6.25.0"
     which "^6.0.0"
 
-node-pty@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-1.1.0.tgz#161936d45a47751c2e3b694c365e73017417a887"
-  integrity sha512-20JqtutY6JPXTUnL0ij1uad7Qe1baT46lyolh2sSENDd4sTzKZ4nmAFkeAARDKwmlLjPx6XKRlwRUxwjOy+lUg==
+node-pty@1.2.0-beta.13:
+  version "1.2.0-beta.13"
+  resolved "https://registry.yarnpkg.com/node-pty/-/node-pty-1.2.0-beta.13.tgz#fe367d0f5afd7a004eabb6318f6d5907a9927533"
+  integrity sha512-ZbbJ7aJdmvRA53bw30D6YSJJKqo1IXTojD0kJeHZ/xZIxr7p1DCmvOmrOnjUo/rn1z4MDwKQGpx0C7K+cRKETw==
   dependencies:
     node-addon-api "^7.1.0"
 
