@@ -25,7 +25,7 @@ jobs:
         run: npm install
       
       - name: Build UI
-        run: npm run build
+        run: npm run ui_build
 
       - name: Publish to npm
         run: npm publish --provenance --access public
