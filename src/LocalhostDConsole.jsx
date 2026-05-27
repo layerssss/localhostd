@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import _ from "lodash";
 import {
   Nav,
@@ -158,7 +158,7 @@ export default function LocalhostDConsole() {
           </div>
         )}
         {!creatingApplication && !!activeApplication && (
-          <React.Fragment key={activeApplication.name}>
+          <Fragment key={activeApplication.name}>
             <Card style={{ flex: "0 0 auto", margin: 0, borderRadius: 0 }}>
               <Card.Body>
                 <ButtonToolbar className="gap-2">
@@ -265,7 +265,7 @@ export default function LocalhostDConsole() {
                 />
               </div>
             )}
-          </React.Fragment>
+          </Fragment>
         )}
         {!creatingApplication && !activeApplication && (
           <div style={{ flex: "1 1 auto", overflowY: "auto", padding: 10 }}>

@@ -1,6 +1,5 @@
 const js = require("@eslint/js");
 const globals = require("globals");
-const babelParser = require("@babel/eslint-parser");
 const reactPlugin = require("eslint-plugin-react");
 const reactHooksPlugin = require("eslint-plugin-react-hooks");
 const prettierConfig = require("eslint-config-prettier");
@@ -34,12 +33,9 @@ module.exports = [
   {
     files: ["src/**/*.js", "src/**/*.jsx"],
     languageOptions: {
-      parser: babelParser,
       parserOptions: {
-        requireConfigFile: false,
-        babelOptions: {
-          presets: ["@babel/preset-react"]
-        }
+        ecmaFeatures: { jsx: true },
+        ecmaVersion: "latest"
       },
       globals: { ...globals.browser, ...globals.es2020 }
     },
@@ -53,6 +49,7 @@ module.exports = [
     rules: {
       ...commonRules,
       ...reactPlugin.configs.recommended.rules,
+      ...reactPlugin.configs["jsx-runtime"].rules,
       ...reactHooksPlugin.configs.recommended.rules,
       "react/prop-types": "off"
     }
