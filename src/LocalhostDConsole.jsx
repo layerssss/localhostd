@@ -24,11 +24,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import QueryString from "query-string";
 
-import ApplicationForm from "./application_form.js";
-import ApplicationTerminal from "./application_terminal.js";
-import OpenUrl from "./open_url.js";
-import OpenBlob from "./open_blob.js";
-import useUIState from "./with_ui_state.js";
+import ApplicationForm from "./ApplicationForm.jsx";
+import ApplicationTerminal from "./ApplicationTerminal.jsx";
+import OpenUrl from "./OpenUrl.js";
+import OpenBlob from "./OpenBlob.js";
+import useUIState from "./useUIState.js";
 
 export default function LocalhostDConsole() {
   const { loaded, uiState, doAction } = useUIState(true);

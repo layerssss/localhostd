@@ -52,4 +52,6 @@ const XTerm = forwardRef(({ onData, onResize }, ref) => {
   );
 });
 
+XTerm.displayName = "XTerm";
+
 export default XTerm;

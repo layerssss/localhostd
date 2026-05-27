@@ -2,10 +2,10 @@
 
 const Path = require("path");
 const { program } = require("commander");
-const Server = require("../lib/server.js");
+const Server = require("../lib/Server.js");
 const UpdateNotifier = require("update-notifier");
 const pkg = require("../package.json");
-const waitDeath = require("../lib/wait_death.js");
+const waitDeath = require("../lib/waitDeath.js");
 
 UpdateNotifier({ pkg }).notify();
 

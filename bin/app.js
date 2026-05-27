@@ -1,12 +1,12 @@
 const electron = require("electron");
 const Path = require("path");
 
-const waitDeath = require("../lib/wait_death.js");
+const waitDeath = require("../lib/waitDeath.js");
 
 electron.app.on("ready", () =>
   Promise.resolve()
     .then(async () => {
-      const App = require("../lib/app.js");
+      const App = require("../lib/App.js");
       const app = new App({
         port: 2999
       });
