@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env = {}) => ({
   mode: env.development ? "development" : "production",
-  entry: "./src/index.js",
+  entry: "./src/index.jsx",
   output: {
     path: path.join(__dirname, "ui_build"),
     filename: "static/js/[name].[contenthash].js",
@@ -15,7 +15,7 @@ module.exports = (env = {}) => ({
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: "babel-loader",
       },

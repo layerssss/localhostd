@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { toast } from "react-toastify";
-import ShimWebSocket from "./shim_web_socket.js";
+import ShimWebSocket from "./ShimWebSocket.js";
 
 let counter = 0;
 
@@ -69,6 +69,7 @@ export default function useUIState(handleMessages = false) {
     return () => {
       if (socketRef.current) socketRef.current.close();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { loaded, uiState, doAction, terminalOutputEventName };

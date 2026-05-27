@@ -4,7 +4,7 @@ let ShimWebSocket;
 if (isElectorn()) {
   const { ipcRenderer } = window.require("electron");
   ShimWebSocket = class {
-    constructor(url) {
+    constructor(_url) {
       this.id = `${Date.now()}${Math.floor(Math.random() * 1000)}`;
 
       ipcRenderer.on(`main-message-${this.id}`, (evt, message) => {

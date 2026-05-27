@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import useUIState from "./with_ui_state.js";
-import XTerm from "./xterm.js";
+import useUIState from "./useUIState.js";
+import XTerm from "./XTerm.jsx";
 
 export default function ApplicationTerminal({ applicationName }) {
   const { doAction, terminalOutputEventName } = useUIState();
