@@ -1,14 +1,12 @@
 import isElectorn from "is-electron";
-import _ from 'lodash';
+import _ from "lodash";
 
 function OpenBlob(name, blob) {
   if (isElectorn()) {
-    const { ipcRenderer } = window.require("electron");
-
     const reader = new FileReader();
     reader.readAsDataURL(blob);
     reader.addEventListener("load", () => {
-      ipcRenderer.send(
+      window.electronAPI.send(
         "renderer-open",
         name,
         reader.result.replace(/^.*base64,/, "")

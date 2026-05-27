@@ -2,26 +2,26 @@ import isElectorn from "is-electron";
 
 let ShimWebSocket;
 if (isElectorn()) {
-  const { ipcRenderer } = window.require("electron");
+  const electronAPI = window.electronAPI;
   ShimWebSocket = class {
     constructor(_url) {
       this.id = `${Date.now()}${Math.floor(Math.random() * 1000)}`;
 
-      ipcRenderer.on(`main-message-${this.id}`, (evt, message) => {
+      electronAPI.on(`main-message-${this.id}`, message => {
         this.onmessage({
           data: message
         });
       });
 
-      ipcRenderer.send("renderer-connect", this.id);
+      electronAPI.send("renderer-connect", this.id);
       window.addEventListener("unload", () => this.close());
       window._mainSocket = this;
     }
     send(message) {
-      ipcRenderer.send(`renderer-message-${this.id}`, message);
+      electronAPI.send(`renderer-message-${this.id}`, message);
     }
     close() {
-      ipcRenderer.send(`renderer-close-${this.id}`);
+      electronAPI.send(`renderer-close-${this.id}`);
     }
   };
 } else ShimWebSocket = WebSocket;

@@ -63,16 +63,14 @@ electron.app.on("ready", () =>
     .catch(error => {
       // eslint-disable-next-line no-console
       console.error(error.stack);
-      electron.dialog.showMessageBox(
-        null,
-        {
+      electron.dialog
+        .showMessageBox(null, {
           type: "error",
-          title: "Fatel error",
+          title: "Fatal error",
           message: `LocalhostD has encountered an error: \n${error.message}`
-        },
-        () => {
+        })
+        .then(() => {
           process.exit(1);
-        }
-      );
+        });
     })
 );
