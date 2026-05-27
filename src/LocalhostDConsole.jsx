@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import {
   Nav,
@@ -36,18 +36,20 @@ export default function LocalhostDConsole() {
   const [creatingApplication, setCreatingApplication] = useState(false);
   const [tab, setTab] = useState("terminal");
 
-  if (!loaded) return null;
-
   const uiApplication = (uiState.applications || []).find(
     a =>
       a.domain === window.location.hostname ||
       window.location.hostname.endsWith(`.${a.domain}`)
   );
 
-  if (uiApplication && !uiApplication.locked && uiApplication.running) {
-    const query = QueryString.parse(window.location.search);
-    window.location.href = query.redirect || "/";
-  }
+  useEffect(() => {
+    if (uiApplication && !uiApplication.locked && uiApplication.running) {
+      const query = QueryString.parse(window.location.search);
+      window.location.href = query.redirect || "/";
+    }
+  }, [uiApplication]);
+
+  if (!loaded) return null;
 
   const activeApplication =
     uiApplication || (uiState.applications || [])[activeApplicationIndex];
