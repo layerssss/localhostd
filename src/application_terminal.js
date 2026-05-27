@@ -1,44 +1,29 @@
-import { compose } from "recompose";
-import React from "react";
-import EventListener from "react-event-listener";
-
-import withUIState from "./with_ui_state.js";
+import React, { useEffect, useRef } from "react";
+import useUIState from "./with_ui_state.js";
 import XTerm from "./xterm.js";
 
-export default compose(withUIState)(
-  class ApplicationTerminal extends React.Component {
-    render() {
-      const { doAction, applicationName, terminalOutputEventName } = this.props;
+export default function ApplicationTerminal({ applicationName }) {
+  const { doAction, terminalOutputEventName } = useUIState();
+  const xTermRef = useRef(null);
 
-      return (
-        <>
-          <EventListener
-            target="window"
-            {...{
-              [`on${terminalOutputEventName}`]: event => {
-                if (applicationName !== event.detail.applicationName) return;
-                this.refs.xTerm.write(event.detail.dataString);
-              }
-            }}
-          />
-          <XTerm
-            ref={`xTerm`}
-            onResize={(cols, rows) =>
-              doAction("ResizeTerminal", {
-                applicationName,
-                cols,
-                rows
-              })
-            }
-            onData={dataString =>
-              doAction("InputTerminal", {
-                applicationName,
-                dataString
-              })
-            }
-          />
-        </>
-      );
-    }
-  }
-);
+  useEffect(() => {
+    const handler = event => {
+      if (applicationName !== event.detail.applicationName) return;
+      xTermRef.current?.write(event.detail.dataString);
+    };
+    window.addEventListener(terminalOutputEventName, handler);
+    return () => window.removeEventListener(terminalOutputEventName, handler);
+  }, [terminalOutputEventName, applicationName]);
+
+  return (
+    <XTerm
+      ref={xTermRef}
+      onResize={(cols, rows) =>
+        doAction("ResizeTerminal", { applicationName, cols, rows })
+      }
+      onData={dataString =>
+        doAction("InputTerminal", { applicationName, dataString })
+      }
+    />
+  );
+}
