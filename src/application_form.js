@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { v4 as uuidv4 } from "uuid";
 import {
   Form,
@@ -14,6 +13,8 @@ import {
 } from "react-bootstrap";
 
 class ApplicationForm extends React.Component {
+  newEnvButtonRef = React.createRef();
+
   state = {
     id: `application_form_${uuidv4()}`,
     name: "",
@@ -267,12 +268,12 @@ class ApplicationForm extends React.Component {
               onKeyPress={ev => {
                 if (ev.charCode !== 13) return;
                 ev.preventDefault();
-                ReactDOM.findDOMNode(this.refs.newEnvButton).click();
+                this.newEnvButtonRef.current.click();
               }}
             />
             <InputGroup.Button>
               <Button
-                ref="newEnvButton"
+                ref={this.newEnvButtonRef}
                 onClick={() =>
                   this.setState({
                     env: {

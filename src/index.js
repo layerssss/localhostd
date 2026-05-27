@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { ToastContainer } from "react-toastify";
 
 import LocalhostDConsole from "./localhostd_console.js";
@@ -9,10 +9,10 @@ import "font-awesome/css/font-awesome.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 
-ReactDOM.render(
+const root = createRoot(document.getElementById("root"));
+root.render(
   <>
     <ToastContainer />
     <LocalhostDConsole />
-  </>,
-  document.getElementById("root")
+  </>
 );
