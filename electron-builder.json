@@ -8,10 +8,7 @@
       "target": "default",
       "arch": ["x64"]
     },
-    "category": "Development",
-    "hardenedRuntime": true,
-    "entitlements": "build/entitlements.mac.plist",
-    "entitlementsInherit": "build/entitlements.mac.plist"
+    "category": "Development"
   },
   "linux": {
     "target": ["deb", "AppImage", "rpm"],
