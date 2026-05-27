@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 
 import LocalhostDConsole from "./localhostd_console.js";
 
-import "bootswatch/dist/materia/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 
