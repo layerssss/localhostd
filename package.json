@@ -1,6 +1,6 @@
 {
   "name": "localhostd",
-  "version": "1.0.47",
+  "version": "1.0.48",
   "description": "LocalhostD takes care of launching your web app on your development machine.",
   "type": "module",
   "main": "bin/app.js",
