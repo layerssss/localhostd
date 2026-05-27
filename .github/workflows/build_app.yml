@@ -6,16 +6,13 @@ on:
     tags:
       - "v*"
   pull_request:
-defaults:
-  run:
-    shell: bash
 jobs:
   build:
     name: Build on ${{ matrix.os }} / Node ${{ matrix.node-version }}
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [24.x]
         os:
           - macos-latest
           - ubuntu-latest
@@ -29,26 +26,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
 
       - name: Install dependencies
-        run: yarn install
+        run: npm install
 
       - name: Rebuild native modules for Electron
-        run: yarn app_deps
+        run: npm run app_deps
 
       - name: Build UI + app (pull request — no publish)
         if: github.event_name == 'pull_request'
-        run: yarn build
+        run: npm run build
 
       - name: Build UI + app (master branch — no publish)
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        run: yarn build
+        run: npm run build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build UI + app and publish release (version tag)
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-        run: yarn ui_build && yarn app_build --publish always
+        run: npm run ui_build && npm run app_build -- --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
