@@ -12,7 +12,7 @@ export default function useUIState(handleMessages = false) {
   );
   const socketRef = useRef(null);
   const loadedRef = useRef(false);
-  loadedRef.current = loaded;
+  loadedRef.current = loaded; // eslint-disable-line react-hooks/refs
 
   const doAction = useCallback((name, parameters) => {
     if (!loadedRef.current) return;

@@ -75,7 +75,7 @@
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react": "^7.0.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-hooks": "^7.0.0",
     "globals": "^15.0.0",
     "html-webpack-plugin": "^5.0.0",
     "is-electron": "^2.1.0",
