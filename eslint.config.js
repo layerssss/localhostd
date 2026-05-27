@@ -1,6 +1,5 @@
 const js = require("@eslint/js");
 const globals = require("globals");
-const reactPlugin = require("eslint-plugin-react");
 const reactHooksPlugin = require("eslint-plugin-react-hooks");
 const prettierConfig = require("eslint-config-prettier");
 
@@ -40,18 +39,11 @@ module.exports = [
       globals: { ...globals.browser, ...globals.es2020 }
     },
     plugins: {
-      react: reactPlugin,
       "react-hooks": reactHooksPlugin
-    },
-    settings: {
-      react: { version: "detect" }
     },
     rules: {
       ...commonRules,
-      ...reactPlugin.configs.recommended.rules,
-      ...reactPlugin.configs["jsx-runtime"].rules,
-      ...reactHooksPlugin.configs.recommended.rules,
-      "react/prop-types": "off"
+      ...reactHooksPlugin.configs.recommended.rules
     }
   },
   prettierConfig
