@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import useUIState from "./useUIState.js";
 import XTerm from "./XTerm.jsx";
 
