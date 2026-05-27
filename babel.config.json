@@ -1,0 +1,7 @@
+{
+  "presets": [
+    ["@babel/preset-env", { "targets": "> 0.2%, not dead, not ie 11" }],
+    ["@babel/preset-react", { "runtime": "classic" }]
+  ],
+  "plugins": ["@babel/plugin-transform-class-properties"]
+}
