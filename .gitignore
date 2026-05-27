@@ -3,3 +3,4 @@
 /ui_build
 
 *.log
+.claude
