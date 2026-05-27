@@ -1,12 +1,15 @@
-const electron = require("electron");
-const Path = require("path");
+import Path from "path";
+import { fileURLToPath } from "url";
+import electron from "electron";
 
-const waitDeath = require("../lib/waitDeath.js");
+import waitDeath from "../lib/waitDeath.js";
+
+const __dirname = Path.dirname(fileURLToPath(import.meta.url));
 
 electron.app.on("ready", () =>
   Promise.resolve()
     .then(async () => {
-      const App = require("../lib/App.js");
+      const { default: App } = await import("../lib/App.js");
       const app = new App({
         port: 2999
       });

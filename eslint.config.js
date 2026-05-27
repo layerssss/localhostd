@@ -1,7 +1,7 @@
-const js = require("@eslint/js");
-const globals = require("globals");
-const reactHooksPlugin = require("eslint-plugin-react-hooks");
-const prettierConfig = require("eslint-config-prettier");
+import js from "@eslint/js";
+import globals from "globals";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import prettierConfig from "eslint-config-prettier";
 
 const commonRules = {
   semi: ["error", "always"],
@@ -9,7 +9,7 @@ const commonRules = {
   "prefer-const": "error"
 };
 
-module.exports = [
+export default [
   {
     ignores: ["node_modules/**", "dist/**", "ui_build/**"]
   },
