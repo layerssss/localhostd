@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import {
   Form,
   FormGroup,
@@ -15,7 +15,7 @@ import {
 
 class ApplicationForm extends React.Component {
   state = {
-    id: `application_form_${uuid.v4()}`,
+    id: `application_form_${uuidv4()}`,
     name: "",
     hostname: "",
     command: "",
